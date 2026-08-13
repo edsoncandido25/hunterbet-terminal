@@ -48,13 +48,14 @@
 
         .card-premium { background: #0d0d14; border: 1px solid #1e1e2d; border-radius: 16px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .card-premium:hover { border-color: rgba(0, 230, 118, 0.3); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+        
         .row-premium { background: #0a0a0f; border: 1px solid #1e1e2d; border-radius: 12px; transition: all 0.2s; }
         .row-premium:hover { border-color: rgba(255,255,255,0.15); background: #12121a; }
 
         #toast-container { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
         .toast { background: #0d0d14; border: 1px solid #1e1e2d; border-left: 4px solid #00E676; color: white; padding: 14px 24px; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); display: flex; align-items: center; gap: 12px; font-weight: 500; font-size: 13px; }
 
-        .custom-checkbox { appearance: none; width: 20px; height: 20px; border: 2px solid #52525b; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s; background: rgba(255,255,255,0.02); }
+        .custom-checkbox { appearance: none; width: 20px; height: 20px; border: 2px solid #52525b; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s; background: rgba(255,255,255,0.02); flex-shrink: 0;}
         .custom-checkbox:hover { border-color: #00E676; }
         .custom-checkbox:checked { background-color: #00E676; border-color: #00E676; box-shadow: 0 0 10px rgba(0,230,118,0.3); }
         .custom-checkbox:checked::after { content: '\\2714'; font-size: 13px; color: #000; font-weight: 900; }
@@ -67,7 +68,7 @@
 
     <div id="toast-container"></div>
 
-    <!-- TELA DE LOGIN SEGURA (SEM HARDCODE) -->
+    <!-- TELA DE LOGIN 100% LIMPA E SEGURA -->
     <div id="auth-screen" class="fixed inset-0 bg-[#020202] z-[200] flex items-center justify-center p-4" style="background-image: radial-gradient(rgba(0, 230, 118, 0.05) 1px, transparent 1px); background-size: 30px 30px;">
         <div class="w-full max-w-sm bg-hb-panel rounded-2xl p-8 border border-hb-border shadow-[0_10px_40px_rgba(0,0,0,0.8)]">
             <div class="flex items-center gap-3 mb-8 justify-center">
@@ -75,6 +76,7 @@
                 <div><h1 class="text-2xl font-black text-white tracking-tight">Hunter<span class="text-hb-green">Bet</span></h1><p class="text-[9px] text-hb-green uppercase tracking-widest font-bold">Terminal Pro</p></div>
             </div>
             <div class="space-y-4">
+                <!-- Inputs vazios sem hardcode de senha -->
                 <input type="text" id="login-user" placeholder="Usuário" autocomplete="off" class="w-full bg-[#050505] border border-hb-border rounded-xl px-4 py-3 text-white focus:border-hb-green outline-none font-mono text-sm transition-colors">
                 <input type="password" id="login-pass" placeholder="Senha" autocomplete="off" class="w-full bg-[#050505] border border-hb-border rounded-xl px-4 py-3 text-white focus:border-hb-green outline-none font-mono text-sm transition-colors">
                 <button onclick="auth.login()" class="w-full bg-hb-green hover:bg-hb-greenDark text-black font-bold py-3.5 rounded-xl uppercase tracking-widest transition-colors mt-2 text-sm shadow-[0_0_15px_rgba(0,230,118,0.3)]">Acessar Sistema</button>
@@ -161,33 +163,36 @@
                     <p class="text-sm text-hb-muted">Visão inteligente dos jogos de hoje extraídos da API-Football.</p>
                 </div>
 
-                <div class="card-premium p-1 relative overflow-hidden" style="background: linear-gradient(180deg, rgba(0,230,118,0.1) 0%, rgba(13,13,20,1) 100%);">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-hb-green/5 blur-[100px] rounded-full pointer-events-none"></div>
+                <!-- DESTAQUE DO PAINEL (NOVO ESTILO ESCURO/VERDE) -->
+                <div class="card-premium relative overflow-hidden" style="background: #050B08; border-color: rgba(0, 230, 118, 0.2);">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-hb-green/10 blur-[100px] rounded-full pointer-events-none"></div>
                     <div class="p-4 sm:p-6 relative z-10">
                         <div class="flex flex-wrap justify-between items-center gap-2 mb-6">
                             <div class="flex items-center gap-2">
                                 <i class="ph-fill ph-fire text-hb-green text-xl"></i>
-                                <div><h3 class="text-sm font-black text-white uppercase tracking-widest">Destaque do Painel</h3><p class="text-[10px] text-hb-muted font-mono tracking-widest uppercase mt-0.5" id="destaque-date-league">Carregando...</p></div>
+                                <div><h3 class="text-sm font-black text-white uppercase tracking-widest">Destaque do Painel</h3><p class="text-[10px] text-zinc-400 font-mono tracking-widest uppercase mt-0.5" id="destaque-date-league">Carregando...</p></div>
                             </div>
-                            <span class="bg-[#050505] border border-white/10 px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-[10px] font-bold text-zinc-300 uppercase tracking-wider shadow-sm"><i class="ph-bold ph-cpu"></i> Top Pick IA</span>
+                            <span class="bg-black/50 border border-white/10 px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-[10px] font-bold text-zinc-300 uppercase tracking-wider shadow-sm"><i class="ph-bold ph-cpu"></i> Top Pick IA</span>
                         </div>
 
+                        <!-- Skeleton Loader -->
                         <div id="destaque-skeleton" class="space-y-4">
                             <div class="h-20 w-full rounded-xl shimmer"></div>
                             <div class="h-10 w-2/3 rounded-lg shimmer"></div>
                             <div class="h-4 w-1/2 rounded shimmer"></div>
                         </div>
 
+                        <!-- Conteúdo do Destaque -->
                         <div id="destaque-content" class="hidden">
-                            <div class="flex flex-col sm:flex-row items-center justify-between bg-black/40 border border-white/5 rounded-xl p-4 sm:p-5 mb-6 backdrop-blur-sm gap-4">
+                            <div class="flex flex-col sm:flex-row items-center justify-between bg-[#0A1410] border border-hb-green/10 rounded-xl p-4 sm:p-5 mb-6 gap-4">
                                 <div class="flex items-center gap-4 w-full sm:w-auto">
-                                    <div class="w-10 h-10 rounded-full bg-[#121214] border border-white/10 flex items-center justify-center text-xs font-bold text-zinc-400">C</div>
-                                    <div><h4 class="font-bold text-white text-lg" id="destaque-home">Casa</h4><p class="text-[10px] text-hb-muted font-mono" id="destaque-xg-home">xG: --</p></div>
+                                    <div class="w-10 h-10 rounded-full bg-black border border-white/10 flex items-center justify-center text-xs font-bold text-zinc-400">C</div>
+                                    <div><h4 class="font-bold text-white text-lg" id="destaque-home">Casa</h4><p class="text-[10px] text-zinc-500 font-mono" id="destaque-xg-home">xG: --</p></div>
                                 </div>
-                                <span class="text-[10px] font-bold text-zinc-600 uppercase bg-white/5 px-2 py-1 rounded">VS</span>
+                                <span class="text-[10px] font-bold text-zinc-600 uppercase bg-black/50 px-2 py-1 rounded">VS</span>
                                 <div class="flex items-center gap-4 w-full sm:w-auto justify-end">
-                                    <div class="text-right"><h4 class="font-bold text-white text-lg" id="destaque-away">Fora</h4><p class="text-[10px] text-hb-muted font-mono" id="destaque-xg-away">xG: --</p></div>
-                                    <div class="w-10 h-10 rounded-full bg-[#121214] border border-white/10 flex items-center justify-center text-xs font-bold text-zinc-400">F</div>
+                                    <div class="text-right"><h4 class="font-bold text-white text-lg" id="destaque-away">Fora</h4><p class="text-[10px] text-zinc-500 font-mono" id="destaque-xg-away">xG: --</p></div>
+                                    <div class="w-10 h-10 rounded-full bg-black border border-white/10 flex items-center justify-center text-xs font-bold text-zinc-400">F</div>
                                 </div>
                             </div>
 
@@ -197,11 +202,11 @@
                                     <h3 class="text-2xl sm:text-3xl font-black text-white mb-3" id="destaque-selection">Processando...</h3>
                                     <p class="text-sm text-zinc-400 leading-relaxed border-l-2 border-hb-green/30 pl-3" id="destaque-tese">Analisando métricas de Expected Goals (xG), linhas de defesa e histórico H2H. Preparando Odd de Valor...</p>
                                 </div>
-                                <div class="w-full lg:w-64 bg-black/40 border border-white/5 rounded-xl p-5 flex flex-col justify-between backdrop-blur-sm">
+                                <div class="w-full lg:w-64 bg-black/40 border border-white/5 rounded-xl p-5 flex flex-col justify-between">
                                     <div class="space-y-4 mb-4">
-                                        <div class="flex justify-between items-center"><span class="text-[10px] font-bold text-hb-muted uppercase">Risco</span><span class="text-xs font-bold text-hb-green flex items-center gap-1 bg-hb-green/10 px-2 py-0.5 rounded" id="destaque-risk">Baixo</span></div>
-                                        <div class="flex justify-between items-center"><span class="text-[10px] font-bold text-hb-muted uppercase">Confiança</span><span class="text-sm font-bold text-white font-mono" id="destaque-prob">--</span></div>
-                                        <div class="flex justify-between items-center pt-3 border-t border-white/5"><span class="text-[10px] font-bold text-hb-muted uppercase">Odd Estimada</span><span class="text-xl font-black text-fuchsia-400 font-mono" id="destaque-odd">--</span></div>
+                                        <div class="flex justify-between items-center"><span class="text-[10px] font-bold text-zinc-500 uppercase">Risco</span><span class="text-xs font-bold text-hb-green flex items-center gap-1 bg-hb-green/10 px-2 py-0.5 rounded" id="destaque-risk">Baixo</span></div>
+                                        <div class="flex justify-between items-center"><span class="text-[10px] font-bold text-zinc-500 uppercase">Confiança</span><span class="text-sm font-bold text-white font-mono" id="destaque-prob">--</span></div>
+                                        <div class="flex justify-between items-center pt-3 border-t border-white/5"><span class="text-[10px] font-bold text-zinc-500 uppercase">Odd Estimada</span><span class="text-xl font-black text-fuchsia-400 font-mono" id="destaque-odd">--</span></div>
                                     </div>
                                     <button class="w-full bg-white hover:bg-zinc-200 text-black font-bold py-2.5 rounded-lg text-xs transition-colors flex items-center justify-center gap-2" onclick="app.addTopPickToSimulator()"><i class="ph-bold ph-plus"></i> Simular Entrada</button>
                                 </div>
@@ -210,9 +215,10 @@
                     </div>
                 </div>
 
+                <!-- Top Oportunidades -->
                 <div>
                     <div class="flex justify-between items-center mb-5">
-                        <h3 class="text-sm font-bold text-white uppercase tracking-widest flex items-center gap-2"><i class="ph-bold ph-lightning text-hb-green"></i> Top Oportunidades</h3>
+                        <h3 class="text-sm font-bold text-white uppercase tracking-widest flex items-center gap-2"><i class="ph-bold ph-lightning text-hb-green"></i> Top Oportunidades do Dia</h3>
                         <button onclick="app.navigate('oportunidades')" class="text-xs text-hb-muted hover:text-hb-green font-medium transition-colors hidden sm:flex items-center gap-1">Central completa <i class="ph-bold ph-arrow-right"></i></button>
                     </div>
                     <div class="space-y-3" id="top-ops-container">
@@ -336,7 +342,7 @@
             removeUser: (idx) => { let users = JSON.parse(localStorage.getItem('hb_users')); users.splice(idx, 1); localStorage.setItem('hb_users', JSON.stringify(users)); admin.render(); ui.toast("Acesso removido."); }
         };
 
-        // AUTH (Zero Hardcode Inicial)
+        // AUTH (BLINDADO, SEM HARDCODE)
         window.auth = {
             init: () => {
                 ui.setDate();
@@ -347,7 +353,7 @@
                 if(session) { 
                     auth.startSession(session); 
                 } else {
-                    document.getElementById('login-user').value = ''; // Limpa pra não vazar
+                    document.getElementById('login-user').value = '';
                     document.getElementById('login-pass').value = '';
                 }
             },
@@ -482,7 +488,6 @@
                 const box = document.getElementById('selected-auditor-matches'); const indices = Array.from(app.selectedMatches);
                 if(!indices.length) { box.innerHTML = `<div class="p-4 bg-[#0a0a0f] border border-[#1e1e2d] rounded-xl text-sm text-hb-muted text-center w-full">A fila está vazia. Volte em Oportunidades.</div>`; return; }
                 
-                // Correção Mobile Flex-Shrink e Truncate
                 box.innerHTML = indices.map(i => `
                 <div class="p-3 sm:p-4 bg-[#0a0a0f] border border-[#1e1e2d] rounded-xl flex justify-between items-center shadow-sm hover:border-white/10 transition-colors w-full">
                     <div class="flex items-center gap-3 flex-1 min-w-0 pr-2">
@@ -599,16 +604,15 @@
                 const resultsArray = await Promise.all(predictionsPromises);
                 let apiStats = resultsArray.join('\n');
 
-                // PROMPT BLINDADO PARA GARANTIR MÚLTIPLAS CORRETAS
                 const promptString = `
 Como Tipster Sênior, audite os jogos: ${matchNames.join(', ')}. Contexto: ${context||'Nenhum'}. Dados API: ${apiStats}
 
 REGRAS ABSOLUTAS:
 1. ESTIME A ODD NUMÉRICA (Ex: 1.85). NUNCA use "N/A".
 2. NUNCA DEIXE CONTRA_ARGUMENTO VAZIO. Crie um cenário adverso técnico se não houver óbvio.
-3. Para MÚLTIPLAS, siga a contagem exata exigida.
+3. Para as múltiplas, FORNEÇA O CÁLCULO EXATO DA ODD, exemplo: @14.76 (2.45 * 2.45 * 2.45).
 
-Sintaxe exata:
+Sintaxe exata (Use '---' para separar):
 ---
 [ANALISE_INDIVIDUAL]
 JOGO: [Casa x Fora]
@@ -620,25 +624,25 @@ RACIOCINIO_QUANT: [Texto técnico sobre xG e tática]
 CONTRA_ARGUMENTO: [O que destrói a aposta]
 ---
 
-OBRIGATÓRIO GERAÇÃO DE MULTIPLAS. PRESTE ATENÇÃO:
+OBRIGATÓRIO GERAÇÃO DE MULTIPLAS:
 ---
 [BILHETE_MULTIPLA_VALOR]
 NOME: Múltipla de Valor (Risco Médio)
-ESTRATEGIA: Combinação de EV positivo.
-ODD_TOTAL: [@X.XX (Y.YY * Z.ZZ)]
+ESTRATEGIA: Combinação focada em EV+.
+ODD_TOTAL: [@12.86 (2.34 * 2.34 * 2.34)]
 PROB_MEDIA: [~45%]
 SELECOES:
-Para CADA jogo selecionado acima, crie EXATAMENTE 2 entradas combinadas. Siga este formato:
+Para CADA jogo selecionado, crie EXATAMENTE 2 entradas diferentes e liste assim:
 - [Jogo 1]: [Entrada A] (@X.XX) e [Entrada B] (@X.XX)
 - [Jogo 2]: [Entrada A] (@X.XX) e [Entrada B] (@X.XX)
 ---
 [BILHETE_MULTIPLA_ELITE]
 NOME: Múltipla Elite (Alta Confiança)
 ESTRATEGIA: Proteção máxima, buscando acerto superior a 80%.
-ODD_TOTAL: [@X.XX (Y.YY * Z.ZZ)]
+ODD_TOTAL: [@1.62 (1.17 * 1.17 * 1.17)]
 PROB_MEDIA: [>80%]
 SELECOES:
-Para CADA jogo selecionado acima, crie EXATAMENTE 1 entrada segura. Siga este formato:
+Para CADA jogo, crie EXATAMENTE 1 entrada segura e liste assim:
 - [Jogo 1]: [Entrada Segura] (@X.XX)
 - [Jogo 2]: [Entrada Segura] (@X.XX)
 ---`;
@@ -660,12 +664,12 @@ Para CADA jogo selecionado acima, crie EXATAMENTE 1 entrada segura. Siga este fo
                                     <h4 class="text-xl font-black text-white">${extractField(part, 'JOGO')}</h4>
                                 </div>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                                    <div class="box-metric"><span class="text-hb-muted block uppercase mb-1.5 text-[9px] tracking-widest font-mono">Mercado</span><span class="text-white font-bold text-sm">${extractField(part, 'MERCADO')}</span></div>
-                                    <div class="box-metric"><span class="text-hb-muted block uppercase mb-1.5 text-[9px] tracking-widest font-mono">Seleção</span><span class="text-white font-bold text-sm">${extractField(part, 'SELECAO')}</span></div>
-                                    <div class="box-metric"><span class="text-hb-muted block uppercase mb-1.5 text-[9px] tracking-widest font-mono">Odd Est.</span><span class="text-white font-black text-lg">@${cleanOdd.toFixed(2)}</span></div>
-                                    <div class="box-metric"><span class="text-hb-muted block uppercase mb-1.5 text-[9px] tracking-widest font-mono">EV+</span><span class="text-hb-green font-black text-lg">${extractField(part, 'EV')}</span></div>
+                                    <div class="box-metric bg-[#121214] border border-white/5 rounded-xl p-4"><span class="text-hb-muted block uppercase mb-1.5 text-[9px] tracking-widest font-mono">Mercado</span><span class="text-white font-bold text-sm">${extractField(part, 'MERCADO')}</span></div>
+                                    <div class="box-metric bg-[#121214] border border-white/5 rounded-xl p-4"><span class="text-hb-muted block uppercase mb-1.5 text-[9px] tracking-widest font-mono">Seleção</span><span class="text-white font-bold text-sm">${extractField(part, 'SELECAO')}</span></div>
+                                    <div class="box-metric bg-[#121214] border border-white/5 rounded-xl p-4"><span class="text-hb-muted block uppercase mb-1.5 text-[9px] tracking-widest font-mono">Odd Est.</span><span class="text-white font-black text-lg">@${cleanOdd.toFixed(2)}</span></div>
+                                    <div class="box-metric bg-[#121214] border border-white/5 rounded-xl p-4"><span class="text-hb-muted block uppercase mb-1.5 text-[9px] tracking-widest font-mono">EV+</span><span class="text-hb-green font-black text-lg">${extractField(part, 'EV')}</span></div>
                                 </div>
-                                <div class="box-rationale space-y-6">
+                                <div class="box-rationale bg-[#121214] border border-white/5 rounded-xl p-5 space-y-6">
                                     <div><strong class="text-hb-green font-mono text-[10px] uppercase flex items-center gap-2 mb-2"><i class="ph-bold ph-cpu text-lg"></i> Raciocínio Quantitativo</strong><p class="text-zinc-300 leading-relaxed text-sm">${extractField(part, 'RACIOCINIO_QUANT')}</p></div>
                                     <div class="border-t border-white/5 pt-4"><strong class="text-red-400 font-mono text-[10px] uppercase flex items-center gap-2 mb-2"><i class="ph-bold ph-shield-warning text-lg"></i> Contra-Argumento</strong><p class="text-zinc-500 italic text-sm">"${extractField(part, 'CONTRA_ARGUMENTO')}"</p></div>
                                 </div>
@@ -673,23 +677,23 @@ Para CADA jogo selecionado acima, crie EXATAMENTE 1 entrada segura. Siga este fo
                             </div>`;
                         } else if(part.includes('[BILHETE_MULTIPLA_VALOR]')) {
                             htmlOutput += `
-                            <div class="card-multiple border border-[#f59e0b]/30 relative overflow-hidden">
-                                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 pb-6 border-b border-white/5 gap-4">
+                            <div class="bg-[#0a0a0f] border border-[#f59e0b]/30 rounded-2xl p-4 sm:p-6 mb-6 shadow-lg">
+                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-6 border-b border-white/5">
                                     <div><h4 class="text-xl font-black text-[#f59e0b] flex items-center gap-2 mb-2"><i class="ph-fill ph-ticket"></i> ${extractField(part, 'NOME')}</h4><span class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest bg-white/5 px-2 py-1 rounded">Probabilidade: ${extractField(part, 'PROB_MEDIA')}</span></div>
-                                    <div class="bg-black border border-white/10 px-5 py-3 rounded-xl shadow-[0_0_20px_rgba(245,158,11,0.1)]"><span class="text-xl font-black text-white">${extractField(part, 'ODD_TOTAL')}</span></div>
+                                    <div class="w-full sm:w-auto bg-black border border-white/10 px-5 py-3 rounded-xl shadow-[0_0_20px_rgba(245,158,11,0.1)] text-center"><span class="text-lg sm:text-xl font-black text-white">${extractField(part, 'ODD_TOTAL')}</span></div>
                                 </div>
-                                <div class="box-strategy"><strong class="text-[#f59e0b] text-[10px] font-bold uppercase block mb-2">Estratégia do Algoritmo</strong><p class="text-sm text-zinc-300 leading-relaxed">${extractField(part, 'ESTRATEGIA')}</p></div>
-                                <div class="box-selections whitespace-pre-wrap">${extractField(part, 'SELECOES')}</div>
+                                <div class="bg-[#121214] border border-white/5 rounded-xl p-5 mb-4"><strong class="text-[#f59e0b] text-[10px] font-bold uppercase block mb-2 tracking-widest">Estratégia do Algoritmo</strong><p class="text-sm text-zinc-300 leading-relaxed">${extractField(part, 'ESTRATEGIA')}</p></div>
+                                <div class="bg-black border border-white/5 rounded-xl p-5 text-sm font-mono text-zinc-300 leading-loose">${extractField(part, 'SELECOES').replace(/\n/g, '<br>')}</div>
                             </div>`;
                         } else if(part.includes('[BILHETE_MULTIPLA_ELITE]')) {
                             htmlOutput += `
-                            <div class="card-multiple border border-[#6366f1]/30 relative overflow-hidden">
-                                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 pb-6 border-b border-white/5 gap-4">
+                            <div class="bg-[#0a0a0f] border border-[#6366f1]/30 rounded-2xl p-4 sm:p-6 mb-6 shadow-lg">
+                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-6 border-b border-white/5">
                                     <div><h4 class="text-xl font-black text-[#818cf8] flex items-center gap-2 mb-2"><i class="ph-fill ph-crown"></i> ${extractField(part, 'NOME')}</h4><span class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest bg-white/5 px-2 py-1 rounded">Probabilidade: ${extractField(part, 'PROB_MEDIA')}</span></div>
-                                    <div class="bg-black border border-white/10 px-5 py-3 rounded-xl shadow-[0_0_20px_rgba(99,102,241,0.1)]"><span class="text-xl font-black text-white">${extractField(part, 'ODD_TOTAL')}</span></div>
+                                    <div class="w-full sm:w-auto bg-black border border-white/10 px-5 py-3 rounded-xl shadow-[0_0_20px_rgba(99,102,241,0.1)] text-center"><span class="text-lg sm:text-xl font-black text-white">${extractField(part, 'ODD_TOTAL')}</span></div>
                                 </div>
-                                <div class="box-strategy"><strong class="text-[#818cf8] text-[10px] font-bold uppercase block mb-2">Estratégia do Algoritmo</strong><p class="text-sm text-zinc-300 leading-relaxed">${extractField(part, 'ESTRATEGIA')}</p></div>
-                                <div class="box-selections whitespace-pre-wrap">${extractField(part, 'SELECOES')}</div>
+                                <div class="bg-[#121214] border border-white/5 rounded-xl p-5 mb-4"><strong class="text-[#818cf8] text-[10px] font-bold uppercase block mb-2 tracking-widest">Estratégia do Algoritmo</strong><p class="text-sm text-zinc-300 leading-relaxed">${extractField(part, 'ESTRATEGIA')}</p></div>
+                                <div class="bg-black border border-white/5 rounded-xl p-5 text-sm font-mono text-zinc-300 leading-loose">${extractField(part, 'SELECOES').replace(/\n/g, '<br>')}</div>
                             </div>`;
                         }
                     });
@@ -701,9 +705,9 @@ Para CADA jogo selecionado acima, crie EXATAMENTE 1 entrada segura. Siga este fo
             }
         };
 
-        // Função de Regex aprimorada para capturar blocos inteiros com quebra de linha (Resolveu a caixa preta)
+        // Regex inteligente para extrair blocos inteiros inclusive com quebras de linha
         function extractField(text, fieldName) { 
-            const regex = new RegExp(fieldName + ':\\s*([\\s\\S]*?)(?=\\n[A-Z_]+:|$)', 'i'); 
+            const regex = new RegExp(fieldName + ':\\s*([\\s\\S]*?)(?=\\n\\[A-Z_]+\\]?:|\\n---|$)', 'i'); 
             const match = text.match(regex); 
             return match ? match[1].trim() : ''; 
         }
