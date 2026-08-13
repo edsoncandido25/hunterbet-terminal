@@ -2,26 +2,23 @@
 <html lang="pt-BR" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HunterBet | Motor de Auditoria</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HunterBet | Elite Analytics</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'], heading: ['Outfit', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
                         hb: {
-                            bg: '#030303', panel: '#0a0a0c', card: '#0f0f12', cardHover: '#18181b',
-                            border: 'rgba(255, 255, 255, 0.08)', green: '#00E676', greenHover: '#00c853',
-                            textMain: '#F4F4F5', textSec: '#A1A1AA', textMuted: '#52525b'
+                            bg: '#050505', panel: '#0a0a0f', card: '#0d0d14', hover: '#161622',
+                            border: '#1e1e2d', green: '#00E676', greenDark: '#00b35c', text: '#F4F4F5', muted: '#8b8b9e'
                         }
                     }
                 }
@@ -30,217 +27,263 @@
     </script>
 
     <style>
-        body { background-color: #030303; color: #F4F4F5; overflow: hidden; -webkit-font-smoothing: antialiased; }
-        .bg-texture { background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px); background-size: 20px 20px; }
+        body { background-color: #050505; color: #F4F4F5; overflow: hidden; -webkit-font-smoothing: antialiased; }
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #52525b; }
+        ::-webkit-scrollbar-thumb:hover { background: #00E676; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         
-        .glass-panel { background: rgba(5, 5, 7, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--hb-border); }
-        .card-premium { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(255, 255, 255, 0.06); }
-        .card-premium:hover { transform: translateY(-3px); border-color: rgba(255, 255, 255, 0.15); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-
-        .nav-link { transition: all 0.2s ease; border-left: 3px solid transparent; }
-        .nav-link:hover { color: #ffffff; background: rgba(255, 255, 255, 0.02); }
-        .nav-link.active { color: #ffffff; background: rgba(0, 230, 118, 0.05); font-weight: 600; border-left-color: #00E676; }
+        .nav-link { transition: all 0.2s ease; border-radius: 8px; }
+        .nav-link:hover { background: rgba(255, 255, 255, 0.03); color: white; }
+        .nav-link.active { background: rgba(0, 230, 118, 0.1); color: #00E676; font-weight: 600; }
         .nav-link.active i { color: #00E676; }
-        .spa-view { display: none; opacity: 0; animation: fadeIn 0.3s ease forwards; }
+
+        .spa-view { display: none; opacity: 0; animation: fadeIn 0.4s ease forwards; }
         .spa-view.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card-premium { background: #0d0d14; border: 1px solid #1e1e2d; border-radius: 16px; transition: all 0.3s ease; }
+        .card-premium:hover { border-color: rgba(0, 230, 118, 0.3); box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
         
-        #toast-container { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
-        .toast { background: #0f0f12; border: 1px solid rgba(255, 255, 255, 0.1); border-top: 3px solid #00E676; color: white; padding: 12px 24px; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); display: flex; align-items: center; gap: 12px; pointer-events: auto; }
-        input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-        
+        .row-hover { transition: all 0.2s; border-bottom: 1px solid #1e1e2d; }
+        .row-hover:hover { background: rgba(255,255,255,0.02); }
+
+        #toast-container { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
+        .toast { background: #0d0d14; border: 1px solid #1e1e2d; border-left: 4px solid #00E676; color: white; padding: 14px 24px; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); display: flex; align-items: center; gap: 12px; font-weight: 500; }
+
         .custom-checkbox { appearance: none; width: 18px; height: 18px; border: 2px solid #52525b; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s; }
         .custom-checkbox:checked { background-color: #00E676; border-color: #00E676; }
         .custom-checkbox:checked::after { content: '\\2714'; font-size: 12px; color: #000; font-weight: bold; }
-        
-        .gradient-border { background: linear-gradient(135deg, rgba(236, 72, 153, 0.5), rgba(139, 92, 246, 0.5)); padding: 1px; border-radius: 1rem; }
     </style>
 </head>
-
-<body class="flex h-screen w-full font-sans text-sm selection:bg-hb-green selection:text-black">
+<body class="flex h-screen w-full selection:bg-hb-green selection:text-black">
 
     <div id="toast-container"></div>
 
-    <div id="auth-screen" class="fixed inset-0 bg-black z-[200] flex items-center justify-center p-4 bg-texture">
-        <div class="w-full max-w-md bg-hb-card rounded-2xl p-8 border border-white/5 shadow-2xl relative">
-            <div class="flex items-center gap-3 mb-8">
-                <div class="w-12 h-12 rounded-xl bg-black border border-hb-green/40 flex items-center justify-center shadow-[0_0_15px_rgba(0,230,118,0.2)]">
-                    <i class="ph-bold ph-target text-hb-green text-2xl"></i>
-                </div>
-                <div>
-                    <h1 class="font-heading text-3xl font-black text-white tracking-tight">Hunter<span class="text-hb-green">Bet</span></h1>
-                    <p class="text-[10px] text-hb-green uppercase tracking-widest font-mono mt-1">Elite Analytics</p>
-                </div>
+    <!-- TELA DE LOGIN -->
+    <div id="auth-screen" class="fixed inset-0 bg-hb-bg z-[200] flex items-center justify-center p-4">
+        <div class="w-full max-w-sm bg-hb-panel rounded-2xl p-8 border border-hb-border shadow-2xl">
+            <div class="flex items-center gap-3 mb-8 justify-center">
+                <div class="w-12 h-12 rounded-xl bg-black border border-hb-green/30 flex items-center justify-center shadow-[0_0_20px_rgba(0,230,118,0.15)]"><i class="ph-bold ph-target text-hb-green text-2xl"></i></div>
+                <div><h1 class="text-2xl font-black text-white tracking-tight">Hunter<span class="text-hb-green">Bet</span></h1><p class="text-[9px] text-hb-green uppercase tracking-widest font-bold">Terminal Pro</p></div>
             </div>
             <div class="space-y-4">
-                <input type="text" id="login-user" value="tzn2510" placeholder="Usuário" class="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-hb-green font-mono">
-                <input type="password" id="login-pass" value="vitor220419" placeholder="Senha" class="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-hb-green font-mono">
-                <button onclick="auth.login()" class="w-full bg-hb-green hover:bg-hb-greenHover text-black font-heading font-extrabold py-3.5 rounded-xl uppercase tracking-widest transition-all mt-2">Entrar</button>
+                <input type="text" id="login-user" value="tzn2510" placeholder="Usuário" class="w-full bg-[#050505] border border-hb-border rounded-xl px-4 py-3 text-white focus:border-hb-green outline-none font-mono text-sm">
+                <input type="password" id="login-pass" value="vitor220419" placeholder="Senha" class="w-full bg-[#050505] border border-hb-border rounded-xl px-4 py-3 text-white focus:border-hb-green outline-none font-mono text-sm">
+                <button onclick="auth.login()" class="w-full bg-hb-green hover:bg-hb-greenDark text-black font-bold py-3.5 rounded-xl uppercase tracking-widest transition-colors mt-2 text-sm">Acessar Terminal</button>
             </div>
         </div>
     </div>
 
-    <aside class="w-[260px] flex-shrink-0 flex-col border-r border-white/5 bg-hb-panel relative hidden xl:flex z-40">
-        <div class="h-24 flex items-center px-6 border-b border-white/5 bg-black">
+    <!-- LOADER GLOBAL -->
+    <div id="global-loader" class="absolute inset-0 bg-hb-bg/90 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="flex flex-col items-center gap-4">
+            <i class="ph-bold ph-circle-notch animate-spin text-4xl text-hb-green"></i>
+            <p class="text-sm font-mono text-hb-muted font-bold tracking-widest uppercase animate-pulse" id="loader-text">Sincronizando...</p>
+        </div>
+    </div>
+
+    <!-- SIDEBAR ESQUERDA -->
+    <aside class="w-[260px] flex-shrink-0 flex-col border-r border-hb-border bg-hb-panel relative hidden xl:flex z-40">
+        <div class="h-20 flex items-center px-6 border-b border-hb-border">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-black border border-hb-green/40 flex items-center justify-center shadow-[0_0_10px_rgba(0,230,118,0.15)]"><i class="ph-bold ph-target text-hb-green text-xl"></i></div>
-                <div><h1 class="font-heading text-2xl font-black text-white leading-none">Hunter<span class="text-hb-green">Bet</span></h1><p class="text-[9px] text-zinc-500 uppercase tracking-[0.25em] font-bold mt-1">Terminal Pro</p></div>
+                <div class="w-9 h-9 rounded-xl bg-black border border-hb-green/30 flex items-center justify-center shadow-[0_0_15px_rgba(0,230,118,0.1)]"><i class="ph-bold ph-target text-hb-green text-lg"></i></div>
+                <div><h1 class="text-xl font-black text-white tracking-tight leading-none">Hunter<span class="text-hb-green">Bet</span></h1><p class="text-[8px] text-hb-muted uppercase tracking-[0.2em] font-bold mt-1">Elite Analytics</p></div>
             </div>
         </div>
 
-        <div class="flex-1 overflow-y-auto py-6 space-y-6 no-scrollbar">
-            <nav class="flex flex-col">
-                <button onclick="app.navigate('dashboard')" data-path="dashboard" class="nav-link active w-full flex items-center gap-3 px-6 py-4 text-zinc-400 text-left"><i class="ph-fill ph-squares-four text-xl"></i> <span class="font-medium">Painel & Jogos</span></button>
-                <button onclick="app.navigate('auditor')" data-path="auditor" class="nav-link w-full flex items-center gap-3 px-6 py-4 text-zinc-400 text-left"><i class="ph-fill ph-cpu text-xl"></i> <span class="font-medium">Motor Cético</span><span class="ml-auto text-[9px] bg-hb-green/10 text-hb-green px-1.5 py-0.5 rounded font-mono font-bold">23 Pts</span></button>
-                <button id="nav-admin" onclick="app.navigate('admin')" data-path="admin" class="nav-link w-full flex items-center gap-3 px-6 py-4 text-zinc-400 text-left hidden"><i class="ph-fill ph-users-three text-xl"></i> <span class="font-medium">Gestão de Contas</span></button>
-            </nav>
+        <div class="flex-1 overflow-y-auto py-6 px-4 space-y-8 no-scrollbar">
+            <!-- Visão Geral -->
+            <div>
+                <p class="text-[10px] uppercase tracking-widest text-hb-muted font-bold mb-3 px-3">Visão Geral</p>
+                <nav class="flex flex-col gap-1">
+                    <button onclick="app.navigate('dashboard')" data-path="dashboard" class="nav-link active w-full flex items-center gap-3 px-3 py-2.5 text-zinc-400 text-left"><i class="ph-fill ph-squares-four text-lg"></i> <span class="font-medium text-sm">Dashboard</span></button>
+                    <button onclick="app.navigate('oportunidades')" data-path="oportunidades" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-zinc-400 text-left"><i class="ph-fill ph-crosshair text-lg"></i> <span class="font-medium text-sm">Oportunidades</span></button>
+                    <button onclick="app.navigate('aovivo')" data-path="aovivo" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-zinc-400 text-left"><i class="ph-fill ph-broadcast text-lg"></i> <span class="font-medium text-sm">Ao Vivo</span><span class="ml-auto w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span></button>
+                </nav>
+            </div>
+
+            <!-- Inteligência -->
+            <div>
+                <p class="text-[10px] uppercase tracking-widest text-hb-muted font-bold mb-3 px-3">Inteligência</p>
+                <nav class="flex flex-col gap-1">
+                    <button onclick="app.navigate('auditor')" data-path="auditor" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-zinc-400 text-left"><i class="ph-fill ph-cpu text-lg"></i> <span class="font-medium text-sm">Motor Cético</span><span class="ml-auto text-[8px] bg-hb-green/10 text-hb-green px-1.5 py-0.5 rounded border border-hb-green/20 uppercase font-bold tracking-widest">Online</span></button>
+                    <button onclick="ui.toast('Aba em desenvolvimento.')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-zinc-400 text-left"><i class="ph-fill ph-clock-counter-clockwise text-lg"></i> <span class="font-medium text-sm">Histórico</span></button>
+                </nav>
+            </div>
+
+            <!-- Minha Área -->
+            <div id="nav-admin-section" class="hidden">
+                <p class="text-[10px] uppercase tracking-widest text-hb-muted font-bold mb-3 px-3">Minha Área</p>
+                <nav class="flex flex-col gap-1">
+                    <button onclick="app.navigate('admin')" data-path="admin" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-zinc-400 text-left"><i class="ph-fill ph-users-three text-lg"></i> <span class="font-medium text-sm">Gestão de Acessos</span></button>
+                </nav>
+            </div>
         </div>
 
-        <div class="p-6 border-t border-white/5 bg-black">
-            <div class="flex items-center gap-3 p-3 rounded-xl bg-hb-card border border-white/5">
-                <div class="w-10 h-10 rounded-lg bg-black border border-white/10 flex items-center justify-center font-bold text-xs text-hb-green font-mono" id="user-avatar">US</div>
-                <div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate" id="user-name">Usuário</p><p class="text-[10px] text-zinc-500 font-mono mt-0.5" id="user-role">Acesso Comum</p></div>
+        <div class="p-4 border-t border-hb-border bg-[#0a0a0f]">
+            <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-white/5 transition-colors cursor-pointer" onclick="auth.logout()">
+                <div class="w-9 h-9 rounded-lg bg-hb-green flex items-center justify-center font-black text-xs text-black" id="user-avatar">US</div>
+                <div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate" id="user-name">Usuário</p><p class="text-[10px] text-hb-green font-mono font-bold mt-0.5" id="user-role">Sessão Ativa</p></div>
+                <i class="ph-bold ph-sign-out text-hb-muted hover:text-white"></i>
             </div>
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col min-w-0 bg-hb-bg relative overflow-hidden bg-texture">
-        <header class="h-20 flex-shrink-0 flex items-center justify-between px-8 glass-panel z-30 sticky top-0">
-            <h2 class="text-sm font-bold text-white tracking-wider flex items-center gap-2" id="header-title"><i class="ph-fill ph-squares-four text-hb-green text-lg"></i> Painel Geral</h2>
-            <button onclick="auth.logout()" class="text-xs font-mono text-zinc-400 hover:text-white px-4 py-2 rounded-lg bg-black border border-white/10 transition-colors">Sair</button>
-        </header>
-
-        <div class="flex-1 overflow-y-auto scroll-smooth w-full relative z-10 p-6 md:p-8" id="app-viewport">
-            
-            <div id="global-loader" class="absolute inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center hidden">
-                <div class="flex flex-col items-center gap-4">
-                    <i class="ph ph-spinner animate-spin text-4xl text-hb-green"></i>
-                    <p class="text-sm font-mono text-zinc-300 font-bold animate-pulse" id="loader-text">Processando...</p>
+    <!-- ÁREA PRINCIPAL -->
+    <main class="flex-1 flex flex-col min-w-0 relative overflow-hidden">
+        
+        <!-- Topbar -->
+        <header class="h-20 flex-shrink-0 flex items-center justify-between px-8 border-b border-hb-border bg-hb-bg z-30 sticky top-0">
+            <div class="flex items-center gap-4">
+                <div class="bg-hb-panel border border-hb-border px-4 py-2 rounded-lg text-sm text-white font-medium flex items-center gap-2 cursor-pointer hover:border-hb-muted transition-colors">
+                    <i class="ph-bold ph-calendar-blank"></i> <span id="current-date">Esta Semana</span> <i class="ph-bold ph-caret-down text-hb-muted text-xs ml-1"></i>
                 </div>
             </div>
+            <div class="relative w-64">
+                <i class="ph-bold ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-hb-muted"></i>
+                <input type="text" placeholder="Buscar time, liga..." class="w-full bg-hb-panel border border-hb-border rounded-full pl-10 pr-4 py-2 text-sm text-white focus:border-hb-green outline-none transition-colors">
+            </div>
+        </header>
 
-            <!-- DASHBOARD -->
-            <section id="view-dashboard" class="spa-view active w-full max-w-4xl mx-auto space-y-6">
-                
-                <!-- DESTAQUE DO PAINEL -->
-                <div id="destaque-panel" class="hidden">
-                    <div class="gradient-border mb-8 shadow-[0_10px_40px_rgba(236,72,153,0.15)]">
-                        <div class="bg-[#0f0f12] rounded-[15px] p-6 relative overflow-hidden">
-                            <div class="absolute -right-20 -top-20 w-64 h-64 bg-fuchsia-600/10 blur-[80px] pointer-events-none"></div>
+        <!-- VIEWS -->
+        <div class="flex-1 overflow-y-auto scroll-smooth w-full p-8" id="app-viewport">
+
+            <!-- 1. DASHBOARD (IDÊNTICO À PRINT) -->
+            <section id="view-dashboard" class="spa-view active max-w-5xl mx-auto space-y-8">
+                <div>
+                    <h2 class="text-2xl font-black text-white tracking-tight mb-1">Painel Executivo</h2>
+                    <p class="text-sm text-hb-muted">Análises de valor já geradas para jogos que ainda não começaram.</p>
+                </div>
+
+                <!-- Destaque do Painel -->
+                <div class="card-premium p-1" style="background: linear-gradient(180deg, rgba(0,230,118,0.08) 0%, rgba(13,13,20,1) 100%);">
+                    <div class="p-6 relative">
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="flex items-center gap-2">
+                                <i class="ph-fill ph-fire text-hb-green text-xl"></i>
+                                <div>
+                                    <h3 class="text-sm font-black text-white uppercase tracking-widest">Destaque do Painel</h3>
+                                    <p class="text-[10px] text-hb-muted font-mono tracking-widest uppercase mt-0.5" id="destaque-date-league">--</p>
+                                </div>
+                            </div>
+                            <span class="bg-[#1a1a24] border border-[#2a2a35] px-3 py-1.5 rounded flex items-center gap-1.5 text-[10px] font-bold text-zinc-300 uppercase tracking-wider"><i class="ph-bold ph-chart-line-up"></i> Screener Estatístico</span>
+                        </div>
+
+                        <div class="flex items-center justify-between bg-[#0a0a0f] border border-hb-border rounded-xl p-5 mb-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-black border border-hb-border flex items-center justify-center text-xs font-bold">C</div>
+                                <div><h4 class="font-bold text-white text-lg" id="destaque-home">Casa</h4><p class="text-[10px] text-hb-muted font-mono" id="destaque-xg-home">xG: --</p></div>
+                            </div>
+                            <span class="text-[10px] font-bold text-zinc-600 uppercase">VS</span>
+                            <div class="flex items-center gap-4">
+                                <div class="text-right"><h4 class="font-bold text-white text-lg" id="destaque-away">Fora</h4><p class="text-[10px] text-hb-muted font-mono" id="destaque-xg-away">xG: --</p></div>
+                                <div class="w-10 h-10 rounded-full bg-black border border-hb-border flex items-center justify-center text-xs font-bold">F</div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col md:flex-row justify-between gap-6">
+                            <div class="flex-1">
+                                <p class="text-[10px] uppercase font-bold text-hb-green tracking-widest mb-1.5">ACHADO DO SCREENER · <span id="destaque-market-raw">--</span></p>
+                                <h3 class="text-3xl font-black text-white mb-3" id="destaque-selection">Processando...</h3>
+                                <p class="text-sm text-hb-muted leading-relaxed" id="destaque-tese">Aguardando inteligência artificial extrair métricas de valor esperado e tática...</p>
+                            </div>
                             
-                            <div class="flex justify-between items-center mb-6">
-                                <div class="flex items-center gap-2">
-                                    <i class="ph-fill ph-fire text-pink-500 text-xl animate-pulse"></i>
-                                    <div>
-                                        <h3 class="text-sm font-black text-white uppercase tracking-widest">Destaque do Painel</h3>
-                                        <p class="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-0.5" id="destaque-league">--</p>
-                                    </div>
+                            <div class="w-full md:w-64 bg-[#0a0a0f] border border-hb-border rounded-xl p-5 flex flex-col justify-between">
+                                <div class="space-y-4 mb-4">
+                                    <div class="flex justify-between items-center"><span class="text-[10px] font-bold text-hb-muted">RISCO</span><span class="text-xs font-bold text-hb-green flex items-center gap-1"><i class="ph-bold ph-shield-check"></i> <span id="destaque-risk">--</span></span></div>
+                                    <div class="flex justify-between items-center"><span class="text-[10px] font-bold text-hb-muted">PROB. DO MODELO</span><span class="text-sm font-bold text-white" id="destaque-prob">--</span></div>
+                                    <div class="flex justify-between items-center"><span class="text-[10px] font-bold text-hb-muted">ODD · ESTIMADA</span><span class="text-lg font-black text-hb-green" id="destaque-odd">--</span></div>
                                 </div>
-                                <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-[10px] font-mono text-zinc-400"><i class="ph-bold ph-chart-line-up"></i> Top Pick IA</span>
-                            </div>
-
-                            <div class="flex flex-col md:flex-row gap-6">
-                                <!-- Lado Esquerdo -->
-                                <div class="flex-1 border-r border-white/5 pr-6">
-                                    <div class="flex justify-between items-center bg-black/40 border border-white/5 rounded-xl p-4 mb-5">
-                                        <div><h4 class="font-bold text-white text-lg" id="destaque-home">--</h4><p class="text-[10px] text-zinc-500 font-mono" id="destaque-xg-home">xG: --</p></div>
-                                        <span class="text-[10px] font-bold text-zinc-600 uppercase">VS</span>
-                                        <div class="text-right"><h4 class="font-bold text-white text-lg" id="destaque-away">--</h4><p class="text-[10px] text-zinc-500 font-mono" id="destaque-xg-away">xG: --</p></div>
-                                    </div>
-                                    <p class="text-[10px] uppercase font-mono text-fuchsia-500 font-bold tracking-widest mb-1.5" id="destaque-market">--</p>
-                                    <h3 class="text-3xl font-heading font-black text-white mb-3" id="destaque-selection">Processando...</h3>
-                                    <p class="text-sm text-zinc-400 leading-relaxed" id="destaque-tese">Extraindo métricas API-Football e processando no Gemini...</p>
-                                </div>
-                                
-                                <!-- Lado Direito -->
-                                <div class="w-full md:w-48 flex flex-col justify-between">
-                                    <div class="space-y-4">
-                                        <div class="flex justify-between items-center"><span class="text-[10px] uppercase font-mono text-zinc-500 tracking-widest">Risco</span><span class="text-xs font-bold text-hb-green bg-hb-green/10 px-2 py-0.5 rounded border border-hb-green/20" id="destaque-risk">--</span></div>
-                                        <div class="flex justify-between items-center"><span class="text-[10px] uppercase font-mono text-zinc-500 tracking-widest">Confiança</span><span class="text-sm font-bold text-white font-mono" id="destaque-prob">--</span></div>
-                                        <div class="flex justify-between items-center"><span class="text-[10px] uppercase font-mono text-zinc-500 tracking-widest">EV</span><span class="text-sm font-bold text-hb-green font-mono" id="destaque-ev">--</span></div>
-                                        <div class="flex justify-between items-center pt-2 border-t border-white/10"><span class="text-[10px] uppercase font-mono text-zinc-500 tracking-widest">Odd Est.</span><span class="text-lg font-black text-fuchsia-400 font-mono" id="destaque-odd">--</span></div>
-                                    </div>
-                                    <button class="w-full mt-4 bg-white hover:bg-zinc-200 text-black font-heading font-black py-3 rounded-xl uppercase tracking-wider transition-colors shadow-glow-white text-xs" onclick="app.addTopPickToSimulator()">
-                                        + Simular
-                                    </button>
+                                <div class="flex gap-2">
+                                    <button class="flex-1 bg-white hover:bg-zinc-200 text-black font-bold py-2 rounded-lg text-xs transition-colors" onclick="ui.toast('Enviado para auditoria completa')">Gerar análise</button>
+                                    <button class="flex-1 bg-[#1a1a24] hover:bg-[#252530] text-white border border-[#2a2a35] font-bold py-2 rounded-lg text-xs transition-colors" onclick="app.addTopPickToSimulator()">+ Simular</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- LISTA DE JOGOS -->
-                <div class="bg-hb-card card-premium rounded-2xl p-6">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b border-white/5 pb-4">
-                        <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                            <i class="ph-bold ph-calendar-blank text-hb-green"></i> Cardápio de Jogos (API-Football)
-                        </h3>
-                        <div class="flex items-center gap-3 w-full sm:w-auto">
-                            <select id="league-filter" onchange="app.renderMatchesList()" class="bg-black border border-white/10 text-xs text-zinc-300 rounded-lg px-4 py-2.5 focus:border-hb-green outline-none w-full sm:w-48"><option value="ALL">Todas as Ligas</option></select>
-                            <button onclick="app.loadFixtures()" class="text-xs text-hb-green font-mono px-4 py-2.5 bg-hb-green/10 hover:bg-hb-green/20 rounded-lg transition-colors whitespace-nowrap">Atualizar</button>
-                        </div>
+                <!-- Top Oportunidades -->
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-sm font-bold text-white uppercase tracking-widest">Top Oportunidades</h3>
+                        <button onclick="app.navigate('oportunidades')" class="text-xs text-hb-green font-medium hover:underline flex items-center gap-1">Ver central completa <i class="ph-bold ph-arrow-right"></i></button>
                     </div>
-                    <div id="matches-list-container" class="space-y-2 max-h-[400px] overflow-y-auto pr-2 no-scrollbar"></div>
-                </div>
-
-                <div class="flex justify-end pt-2">
-                    <button onclick="app.navigate('auditor')" class="bg-hb-green hover:bg-hb-greenHover text-black font-heading font-extrabold px-8 py-4 rounded-xl uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(0,230,118,0.2)] flex items-center gap-3">
-                        <span>Avançar para Auditoria</span> <i class="ph-bold ph-arrow-right text-xl"></i>
-                    </button>
+                    <div class="card-premium overflow-hidden" id="top-ops-container">
+                        <!-- Linhas geradas via JS -->
+                        <div class="p-6 text-center text-sm text-hb-muted animate-pulse">Carregando jogos do dia...</div>
+                    </div>
                 </div>
             </section>
 
-            <!-- MOTOR DE AUDITORIA -->
-            <section id="view-auditor" class="spa-view w-full max-w-4xl mx-auto space-y-6">
-                <div><h2 class="text-3xl font-heading font-black text-white tracking-tight">Inteligência Cética (23 Pts)</h2><p class="text-sm text-zinc-400 mt-1">O Motor avaliará EV+ e projetará as múltiplas automaticamente.</p></div>
-
-                <div class="bg-hb-card card-premium rounded-2xl p-6 space-y-6">
-                    <div>
-                        <label class="block text-[10px] font-mono uppercase text-zinc-500 mb-2 tracking-widest">Partidas Alvo</label>
-                        <div id="selected-auditor-matches" class="space-y-2"><div class="p-4 bg-black border border-white/5 rounded-xl text-xs text-zinc-500 font-mono">Nenhuma partida selecionada.</div></div>
+            <!-- 2. OPORTUNIDADES (A Lista de Seleção para Auditoria) -->
+            <section id="view-oportunidades" class="spa-view max-w-5xl mx-auto space-y-6">
+                <div><h2 class="text-2xl font-black text-white tracking-tight mb-1">Central de Oportunidades</h2><p class="text-sm text-hb-muted">Lista completa de jogos da API-Football. Selecione para enviar à IA.</p></div>
+                <div class="card-premium p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-sm font-bold text-white uppercase tracking-widest">Jogos Disponíveis</h3>
+                        <button onclick="app.loadFixtures()" class="bg-[#1a1a24] border border-[#2a2a35] px-4 py-2 rounded-lg text-xs font-bold text-white hover:bg-[#252530] transition-colors">Atualizar API</button>
                     </div>
-                    <div>
-                        <label class="block text-[10px] font-mono uppercase text-zinc-500 mb-2 tracking-widest">Contexto (Opcional)</label>
-                        <textarea id="tipster-context" rows="2" placeholder="Filtro tático manual ou notícias..." class="w-full bg-black border border-white/10 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-hb-green font-sans"></textarea>
-                    </div>
-                    <button onclick="auditorEngine.run()" class="w-full bg-white hover:bg-zinc-200 text-black font-heading font-extrabold py-4 rounded-xl uppercase tracking-widest transition-all shadow-glow-white flex items-center justify-center gap-2"><i class="ph-bold ph-cpu text-xl"></i> Executar Auditoria Master</button>
+                    <div id="full-matches-list" class="space-y-0"></div>
                 </div>
-
-                <div id="auditor-results-card" class="hidden space-y-6"></div>
             </section>
 
-            <!-- ADMIN -->
-            <section id="view-admin" class="spa-view w-full max-w-4xl mx-auto space-y-6">
-                <div><h2 class="text-3xl font-heading font-black text-white tracking-tight">Gestão de Contas</h2></div>
-                <div class="bg-hb-card card-premium rounded-2xl p-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                        <input type="text" id="new-user" placeholder="Novo Login" class="bg-black border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:border-hb-green outline-none">
-                        <input type="text" id="new-pass" placeholder="Senha" class="bg-black border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:border-hb-green outline-none">
-                        <button onclick="admin.addUser()" class="bg-white hover:bg-zinc-200 text-black font-bold py-3 rounded-lg transition-colors uppercase text-xs">Criar Conta</button>
+            <!-- 3. AO VIVO -->
+            <section id="view-aovivo" class="spa-view max-w-5xl mx-auto space-y-6">
+                <div><h2 class="text-2xl font-black text-white tracking-tight mb-1 flex items-center gap-2">Monitoramento Ao Vivo <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span></h2><p class="text-sm text-hb-muted">Partidas rolando agora (In-Play).</p></div>
+                <div class="card-premium p-6">
+                    <button onclick="app.loadFixtures('live')" class="w-full bg-[#1a1a24] border border-[#2a2a35] py-3 rounded-lg text-sm font-bold text-white hover:bg-[#252530] transition-colors mb-6 flex items-center justify-center gap-2"><i class="ph-bold ph-broadcast text-red-500"></i> Buscar Jogos Live Agora</button>
+                    <div id="live-matches-list" class="space-y-0 text-center text-sm text-hb-muted">Aperte buscar para varrer a API.</div>
+                </div>
+            </section>
+
+            <!-- 4. MOTOR DE AUDITORIA (CÉTICO) -->
+            <section id="view-auditor" class="spa-view max-w-5xl mx-auto space-y-6">
+                <div><h2 class="text-2xl font-black text-white tracking-tight mb-1">Motor Cético (23 Pts)</h2><p class="text-sm text-hb-muted">Processamento profundo para validação de EV+ e Múltiplas.</p></div>
+                
+                <div class="card-premium p-6 space-y-6">
+                    <div>
+                        <label class="block text-[10px] uppercase font-bold text-hb-muted mb-2 tracking-widest">Partidas Alvo</label>
+                        <div id="selected-auditor-matches" class="space-y-2"><div class="p-4 bg-[#0a0a0f] border border-[#1e1e2d] rounded-xl text-sm text-hb-muted">Nenhuma partida selecionada. Vá em Oportunidades.</div></div>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm text-zinc-300">
-                            <thead class="text-[10px] uppercase font-mono text-zinc-500 bg-black"><tr><th class="p-3 rounded-tl-lg">Usuário</th><th class="p-3">Nível</th><th class="p-3 text-right rounded-tr-lg">Ação</th></tr></thead>
-                            <tbody id="users-table-body" class="divide-y divide-white/5"></tbody>
-                        </table>
+                    <div>
+                        <label class="block text-[10px] uppercase font-bold text-hb-muted mb-2 tracking-widest">Contexto (Opcional)</label>
+                        <textarea id="tipster-context" rows="3" placeholder="Insira lesões, árbitro ou clima..." class="w-full bg-[#0a0a0f] border border-[#1e1e2d] rounded-xl p-4 text-sm text-white focus:outline-none focus:border-hb-green transition-colors"></textarea>
                     </div>
+                    <button onclick="auditorEngine.run()" class="w-full bg-white hover:bg-zinc-200 text-black font-black py-4 rounded-xl uppercase tracking-widest transition-all flex items-center justify-center gap-2"><i class="ph-bold ph-cpu text-xl"></i> Executar Auditoria Master</button>
+                </div>
+
+                <div id="auditor-results-card" class="hidden space-y-6 pb-12"></div>
+            </section>
+
+            <!-- 5. ADMIN -->
+            <section id="view-admin" class="spa-view max-w-5xl mx-auto space-y-6">
+                <div><h2 class="text-2xl font-black text-white tracking-tight mb-1">Gestão de Acessos</h2><p class="text-sm text-hb-muted">Crie logins para seus clientes.</p></div>
+                <div class="card-premium p-6">
+                    <div class="flex gap-4 mb-8">
+                        <input type="text" id="new-user" placeholder="Login" class="flex-1 bg-[#0a0a0f] border border-[#1e1e2d] rounded-lg px-4 py-2.5 text-sm text-white focus:border-hb-green outline-none">
+                        <input type="text" id="new-pass" placeholder="Senha" class="flex-1 bg-[#0a0a0f] border border-[#1e1e2d] rounded-lg px-4 py-2.5 text-sm text-white focus:border-hb-green outline-none">
+                        <button onclick="admin.addUser()" class="bg-hb-green hover:bg-hb-greenDark text-black font-bold px-6 py-2.5 rounded-lg text-sm transition-colors">Criar Conta</button>
+                    </div>
+                    <table class="w-full text-left text-sm text-zinc-300">
+                        <thead class="text-[10px] uppercase text-hb-muted border-b border-[#1e1e2d]"><tr><th class="pb-3">Usuário</th><th class="pb-3">Nível</th><th class="pb-3 text-right">Ação</th></tr></thead>
+                        <tbody id="users-table-body"></tbody>
+                    </table>
                 </div>
             </section>
 
         </div>
     </main>
 
-    <!-- SIMULADOR LATERAL -->
-    <aside class="w-[340px] flex-shrink-0 flex-col border-l border-white/5 bg-hb-panel relative hidden lg:flex z-40 overflow-y-auto no-scrollbar">
-        <div class="p-6 border-b border-white/5 bg-hb-panel sticky top-0 z-20">
-            <h2 class="font-heading text-sm uppercase tracking-widest font-black text-white flex items-center gap-2"><i class="ph-bold ph-calculator text-zinc-400"></i> Calculadora (EV)</h2>
+    <!-- SIDEBAR DIREITA (SIMULADOR) -->
+    <aside class="w-[320px] flex-shrink-0 flex-col border-l border-hb-border bg-hb-panel relative hidden lg:flex z-40">
+        <div class="h-20 flex items-center justify-between px-6 border-b border-hb-border">
+            <h2 class="text-xs font-bold text-white uppercase tracking-widest flex items-center gap-2"><i class="ph-bold ph-calculator text-hb-green text-lg"></i> Simulador de Retorno</h2>
+            <i class="ph-bold ph-caret-right text-hb-muted"></i>
         </div>
-        <div class="p-5" id="simulator-container"></div>
+        <div class="p-6 flex-1 overflow-y-auto" id="simulator-container"></div>
     </aside>
 
     <script>
@@ -249,57 +292,49 @@
         window.ui = {
             toast: (msg, type = 'info') => {
                 const c = document.getElementById('toast-container'); const t = document.createElement('div');
-                t.className = `toast text-xs font-mono ${type === 'error' ? '!border-t-red-500 text-red-400' : 'text-zinc-200'}`;
-                t.innerHTML = `<i class="ph-bold ph-${type === 'error' ? 'warning text-red-500' : 'check-circle text-hb-green'} text-lg"></i> <span>${msg}</span>`;
+                t.className = `toast border-l-4 ${type === 'error' ? 'border-red-500 text-white' : 'border-hb-green'}`;
+                t.innerHTML = `<i class="ph-bold ph-${type === 'error' ? 'warning text-red-500' : 'check-circle text-hb-green'} text-xl"></i> <span>${msg}</span>`;
                 c.appendChild(t); setTimeout(() => t.remove(), 4000);
             },
-            setLoader: (show, text = "Processando...") => { document.getElementById('loader-text').innerText = text; document.getElementById('global-loader').classList.toggle('hidden', !show); },
-            setHeaderTitle: (title, icon) => { document.getElementById('header-title').innerHTML = `<i class="ph-fill ph-${icon} text-hb-green text-lg"></i> ${title}`; }
+            setLoader: (show, text = "Sincronizando...") => { document.getElementById('loader-text').innerText = text; document.getElementById('global-loader').classList.toggle('hidden', !show); },
+            setDate: () => { const options = { day: '2-digit', month: '2-digit' }; document.getElementById('current-date').innerText = new Date().toLocaleDateString('pt-BR', options); }
         };
 
         window.admin = {
             render: () => {
                 const users = JSON.parse(localStorage.getItem('hb_users')) || [];
-                document.getElementById('users-table-body').innerHTML = users.map((u, i) => `<tr class="hover:bg-white/5"><td class="p-3 font-bold text-white">${u.user}</td><td class="p-3"><span class="px-2 py-1 rounded text-[9px] uppercase ${u.role==='master'?'bg-hb-green/10 text-hb-green':'bg-white/10 text-zinc-400'}">${u.role}</span></td><td class="p-3 text-right">${u.role !== 'master' ? `<button onclick="admin.removeUser(${i})" class="text-red-400 text-xs hover:underline">Excluir</button>` : '-'}</td></tr>`).join('');
+                document.getElementById('users-table-body').innerHTML = users.map((u, i) => `<tr class="border-b border-[#1e1e2d] hover:bg-white/5"><td class="py-4 font-bold text-white">${u.user}</td><td class="py-4"><span class="px-2 py-1 rounded text-[9px] uppercase font-bold tracking-widest ${u.role==='master'?'bg-hb-green/10 text-hb-green':'bg-white/10 text-zinc-400'}">${u.role}</span></td><td class="py-4 text-right">${u.role !== 'master' ? `<button onclick="admin.removeUser(${i})" class="text-red-400 text-xs font-medium hover:underline">Revogar</button>` : '-'}</td></tr>`).join('');
             },
             addUser: () => {
                 const u = document.getElementById('new-user').value.trim(); const p = document.getElementById('new-pass').value.trim();
-                if(!u || !p) return ui.toast("Preencha tudo.", "error");
+                if(!u || !p) return ui.toast("Preencha login e senha.", "error");
                 let users = JSON.parse(localStorage.getItem('hb_users')) || [];
                 if(users.find(x => x.user === u)) return ui.toast("Login existe.", "error");
                 users.push({ user: u, pass: p, role: 'comum' }); localStorage.setItem('hb_users', JSON.stringify(users));
-                document.getElementById('new-user').value = ''; document.getElementById('new-pass').value = ''; ui.toast("Criado com sucesso."); admin.render();
+                document.getElementById('new-user').value = ''; document.getElementById('new-pass').value = ''; ui.toast("Conta criada."); admin.render();
             },
             removeUser: (idx) => { let users = JSON.parse(localStorage.getItem('hb_users')); users.splice(idx, 1); localStorage.setItem('hb_users', JSON.stringify(users)); admin.render(); ui.toast("Removido."); }
         };
 
         window.auth = {
             init: () => {
-                document.getElementById('splash-screen').classList.remove('hidden');
+                ui.setDate();
                 let users = JSON.parse(localStorage.getItem('hb_users'));
                 if(!users) { users = [{ user: 'tzn2510', pass: 'vitor220419', role: 'master' }]; localStorage.setItem('hb_users', JSON.stringify(users)); }
-                
-                setTimeout(() => {
-                    document.getElementById('splash-screen').style.opacity = '0';
-                    setTimeout(() => {
-                        document.getElementById('splash-screen').classList.add('hidden');
-                        document.getElementById('splash-screen').style.opacity = '1';
-                        const session = JSON.parse(localStorage.getItem('hb_session'));
-                        if(session) auth.startSession(session);
-                    }, 500);
-                }, 1000);
+                const session = JSON.parse(localStorage.getItem('hb_session'));
+                if(session) { auth.startSession(session); }
             },
             login: () => {
                 const u = document.getElementById('login-user').value.trim(); const p = document.getElementById('login-pass').value.trim();
                 const users = JSON.parse(localStorage.getItem('hb_users')) || []; const found = users.find(x => x.user === u && x.pass === p);
                 if(found) {
-                    localStorage.setItem('hb_session', JSON.stringify(found)); document.getElementById('auth-screen').remove(); document.getElementById('splash-screen').classList.remove('hidden');
-                    setTimeout(() => { document.getElementById('splash-screen').style.opacity = '0'; setTimeout(() => { document.getElementById('splash-screen').classList.add('hidden'); auth.startSession(found); }, 500); }, 1000);
+                    localStorage.setItem('hb_session', JSON.stringify(found));
+                    document.getElementById('auth-screen').remove(); auth.startSession(found);
                 } else ui.toast("Senha incorreta.", "error");
             },
             startSession: (user) => {
-                document.getElementById('auth-screen')?.remove(); document.getElementById('user-name').innerText = user.user; document.getElementById('user-avatar').innerText = user.user.substring(0,2).toUpperCase(); document.getElementById('user-role').innerText = user.role === 'master' ? 'Master' : 'Comum';
-                if(user.role === 'master') { document.getElementById('nav-admin').classList.remove('hidden'); admin.render(); }
+                document.getElementById('auth-screen')?.remove(); document.getElementById('user-name').innerText = user.user; document.getElementById('user-avatar').innerText = user.user.substring(0,2).toUpperCase(); document.getElementById('user-role').innerText = user.role === 'master' ? 'Master' : 'Acesso Comum';
+                if(user.role === 'master') { document.getElementById('nav-admin-section').classList.remove('hidden'); admin.render(); }
                 app.loadFixtures();
             },
             logout: () => { localStorage.removeItem('hb_session'); location.reload(); }
@@ -307,253 +342,251 @@
 
         window.app = {
             matches: [], selectedMatches: new Set(), simulatorPicks: [], stake: 100.00, currentTopPick: null,
+            
             navigate: (viewId) => {
-                document.querySelectorAll('.spa-view').forEach(v => v.classList.remove('active')); document.getElementById(`view-${viewId}`)?.classList.add('active');
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); document.querySelector(`.nav-link[data-path="${viewId}"]`)?.classList.add('active');
-                if(viewId === 'dashboard') ui.setHeaderTitle("Painel de Jogos", "squares-four");
-                if(viewId === 'auditor') ui.setHeaderTitle("Motor de Auditoria", "cpu");
+                ui.setLoader(true, "Carregando...");
+                setTimeout(() => {
+                    document.querySelectorAll('.spa-view').forEach(v => v.classList.remove('active')); document.getElementById(`view-${viewId}`)?.classList.add('active');
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); document.querySelector(`.nav-link[data-path="${viewId}"]`)?.classList.add('active');
+                    document.getElementById('app-viewport').scrollTop = 0; ui.setLoader(false);
+                }, 150);
             },
-            loadFixtures: async () => {
-                ui.setLoader(true, "Conectando API-Football...");
+            
+            loadFixtures: async (type = 'today') => {
+                ui.setLoader(true, "Buscando Jogos...");
                 try {
-                    const res = await fetch(`https://v3.football.api-sports.io/fixtures?date=${new Date().toLocaleDateString('sv-SE')}&timezone=America/Sao_Paulo`, { headers: { "x-apisports-key": API_FOOTBALL_KEY } });
+                    let url = type === 'live' ? `https://v3.football.api-sports.io/fixtures?live=all&timezone=America/Sao_Paulo` : `https://v3.football.api-sports.io/fixtures?date=${new Date().toLocaleDateString('sv-SE')}&timezone=America/Sao_Paulo`;
+                    const res = await fetch(url, { headers: { "x-apisports-key": API_FOOTBALL_KEY } });
                     const data = await res.json();
                     if(data.response && data.response.length > 0) {
                         app.matches = data.response;
-                        app.populateLeagues(); app.renderMatchesList(); app.generateTopPick();
+                        app.renderLists(type);
+                        if(type === 'today') app.buildDashboard();
+                        ui.toast(`${data.response.length} partidas sincronizadas.`);
                     } else throw new Error("Vazio");
                 } catch (e) {
+                    // Fallback para não quebrar a tela de teste
                     app.matches = [
-                        { fixture: { id: 1 }, teams: { home: { name: "Flamengo" }, away: { name: "Cruzeiro" } }, league: { name: "Brasileirão Série A" } },
-                        { fixture: { id: 2 }, teams: { home: { name: "Boca Juniors" }, away: { name: "River Plate" } }, league: { name: "Copa Libertadores" } }
+                        { fixture: { id: 1, date: new Date().toISOString() }, teams: { home: { name: "Rosario Central", logo: "" }, away: { name: "Corinthians", logo: "" } }, league: { name: "Copa Libertadores" } },
+                        { fixture: { id: 2, date: new Date().toISOString() }, teams: { home: { name: "Mirassol", logo: "" }, away: { name: "LDU", logo: "" } }, league: { name: "Copa Sul-Americana" } },
+                        { fixture: { id: 3, date: new Date().toISOString() }, teams: { home: { name: "Vasco da Gama", logo: "" }, away: { name: "Olimpia", logo: "" } }, league: { name: "Copa Libertadores" } },
+                        { fixture: { id: 4, date: new Date().toISOString() }, teams: { home: { name: "Santos", logo: "" }, away: { name: "Macará", logo: "" } }, league: { name: "Copa Sul-Americana" } }
                     ];
-                    app.populateLeagues(); app.renderMatchesList(); app.generateTopPick(); ui.toast("Fallback Local Ativo.", "info");
+                    app.renderLists(type); if(type === 'today') app.buildDashboard(); ui.toast("Fallback Local Ativo.", "info");
                 } finally { ui.setLoader(false); }
             },
-            populateLeagues: () => {
-                const leagues = [...new Set(app.matches.map(m => m.league.name))].sort();
-                document.getElementById('league-filter').innerHTML = '<option value="ALL">Todas as Ligas</option>' + leagues.map(l => `<option value="${l}">${l}</option>`).join('');
-            },
-            renderMatchesList: () => {
-                const filter = document.getElementById('league-filter').value;
-                const filtered = app.matches.map((m, idx) => ({ ...m, origIdx: idx })).filter(m => filter === 'ALL' || m.league.name === filter);
-                document.getElementById('matches-list-container').innerHTML = filtered.map(m => `
-                    <div class="bg-black border border-white/5 hover:border-white/20 rounded-xl p-3 flex items-center justify-between cursor-pointer group" onclick="app.toggleMatch(${m.origIdx})">
-                        <div class="flex items-center gap-3">
-                            <input type="checkbox" ${app.selectedMatches.has(m.origIdx) ? 'checked' : ''} class="custom-checkbox" onclick="event.stopPropagation(); app.toggleMatch(${m.origIdx})">
-                            <div><p class="text-sm font-bold text-white group-hover:text-hb-green">${m.teams.home.name} x ${m.teams.away.name}</p><p class="text-[10px] text-zinc-500 font-mono">${m.league.name}</p></div>
+
+            renderLists: (type) => {
+                const target = type === 'live' ? 'live-matches-list' : 'full-matches-list';
+                const html = app.matches.map((m, idx) => {
+                    const chk = app.selectedMatches.has(idx) ? 'checked' : '';
+                    let time = new Date(m.fixture.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    let st = type === 'live' ? `<span class="text-red-500 font-bold animate-pulse text-xs">${m.fixture.status?.elapsed||0}'</span>` : time;
+                    return `
+                    <div class="row-hover p-4 flex items-center justify-between cursor-pointer group" onclick="app.toggleMatch(${idx})">
+                        <div class="flex items-center gap-4">
+                            <input type="checkbox" ${chk} class="custom-checkbox" onclick="event.stopPropagation(); app.toggleMatch(${idx})">
+                            <div><p class="text-sm font-bold text-white group-hover:text-hb-green transition-colors">${m.teams.home.name} x ${m.teams.away.name}</p><p class="text-[10px] text-hb-muted font-mono uppercase tracking-widest mt-1">${m.league.name} • ${st}</p></div>
                         </div>
-                    </div>`).join('');
+                    </div>`;
+                }).join('');
+                document.getElementById(target).innerHTML = html || '<p class="p-6 text-hb-muted text-sm text-center">Vazio.</p>';
             },
-            toggleMatch: (idx) => { app.selectedMatches.has(idx) ? app.selectedMatches.delete(idx) : app.selectedMatches.add(idx); app.renderMatchesList(); app.updateAuditorBox(); },
+
+            toggleMatch: (idx) => { app.selectedMatches.has(idx) ? app.selectedMatches.delete(idx) : app.selectedMatches.add(idx); app.renderLists('today'); app.updateAuditorBox(); },
             updateAuditorBox: () => {
                 const box = document.getElementById('selected-auditor-matches'); const indices = Array.from(app.selectedMatches);
-                if(!indices.length) { box.innerHTML = `<div class="p-4 bg-black border border-white/5 rounded-xl text-xs text-zinc-500 font-mono">Vazio.</div>`; return; }
-                box.innerHTML = indices.map(i => `<div class="p-3 bg-black border border-white/10 rounded-lg flex justify-between items-center mb-2"><span class="text-xs font-bold text-white">${app.matches[i].teams.home.name} x ${app.matches[i].teams.away.name}</span><button onclick="app.toggleMatch(${i})" class="text-zinc-500 hover:text-red-400"><i class="ph-bold ph-trash"></i></button></div>`).join('');
+                if(!indices.length) { box.innerHTML = `<div class="p-4 bg-[#0a0a0f] border border-[#1e1e2d] rounded-xl text-sm text-hb-muted">Nenhuma selecionada.</div>`; return; }
+                box.innerHTML = indices.map(i => `<div class="p-4 bg-[#0a0a0f] border border-[#1e1e2d] rounded-xl flex justify-between items-center mb-2"><span class="text-sm font-bold text-white">${app.matches[i].teams.home.name} x ${app.matches[i].teams.away.name}</span><button onclick="app.toggleMatch(${i})" class="text-hb-muted hover:text-red-400"><i class="ph-bold ph-trash"></i></button></div>`).join('');
             },
 
-            // LOGICA DO DESTAQUE 
-            generateTopPick: async () => {
+            // MONTAGEM DO DASHBOARD IDÊNTICO À PRINT
+            buildDashboard: async () => {
                 const targetLeagues = /libertadores|sul-americana|copa do brasil|brasileir/i;
-                const topMatch = app.matches.find(m => targetLeagues.test(m.league.name)) || app.matches[0];
-                if(!topMatch) return;
+                const premiumMatches = app.matches.filter(m => targetLeagues.test(m.league.name));
+                const pool = premiumMatches.length >= 4 ? premiumMatches : app.matches;
+                
+                if(!pool.length) return;
+                const topMatch = pool[0];
+                const top3 = pool.slice(1, 4);
 
-                document.getElementById('destaque-panel').classList.remove('hidden');
-                document.getElementById('destaque-league').innerText = topMatch.league.name;
+                // Preenche Destaque
+                const timeStr = new Date(topMatch.fixture.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                document.getElementById('destaque-date-league').innerText = `${timeStr} · ${topMatch.league.name}`;
                 document.getElementById('destaque-home').innerText = topMatch.teams.home.name;
                 document.getElementById('destaque-away').innerText = topMatch.teams.away.name;
 
+                // Preenche Top 3 Oportunidades (Listagem embaixo)
+                document.getElementById('top-ops-container').innerHTML = top3.map(m => {
+                    const tm = new Date(m.fixture.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    // Mocks visuais para dar a estética pedida antes da IA processar
+                    return `
+                    <div class="row-hover p-5 flex flex-col md:flex-row items-center justify-between gap-4 cursor-pointer">
+                        <div class="flex-1">
+                            <p class="text-[9px] text-hb-muted font-mono uppercase tracking-widest mb-1.5"><i class="ph-bold ph-calendar-blank"></i> ${tm} · ${m.league.name}</p>
+                            <div class="flex items-center gap-2"><h4 class="text-sm font-bold text-white">${m.teams.home.name}</h4> <span class="text-xs text-hb-muted">x</span> <h4 class="text-sm font-bold text-white">${m.teams.away.name}</h4></div>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-[9px] uppercase text-hb-muted font-bold tracking-widest mb-1">Mercado</p>
+                            <p class="text-sm font-bold text-white">Análise Preditiva</p>
+                            <p class="text-[10px] text-hb-muted font-mono mt-0.5">Em processamento...</p>
+                        </div>
+                        <div class="flex items-center gap-6">
+                            <div><p class="text-[9px] uppercase text-hb-muted font-bold tracking-widest mb-1">Risco</p><p class="text-xs font-bold text-hb-green"><i class="ph-bold ph-shield-check"></i> Baixo</p></div>
+                            <div><p class="text-[9px] uppercase text-hb-muted font-bold tracking-widest mb-1">Prob. Modelo</p><p class="text-sm font-bold text-white font-mono">--%</p></div>
+                            <div><p class="text-[9px] uppercase text-hb-muted font-bold tracking-widest mb-1">Odd</p><p class="text-lg font-black text-[#FF0080] font-mono">--</p></div>
+                            <div class="flex items-center gap-2 ml-2">
+                                <button class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-colors" onclick="app.navigate('auditor')"><i class="ph-bold ph-arrow-right"></i></button>
+                                <button class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-colors"><i class="ph-bold ph-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>`;
+                }).join('');
+
+                // Chama a IA secretamente para processar o Destaque
                 try {
-                    const predRes = await fetch(`https://v3.football.api-sports.io/predictions?fixture=${topMatch.fixture.id}`, { headers: { "x-apisports-key": API_FOOTBALL_KEY } });
-                    const predData = await predRes.json();
-                    let stats = "";
-                    if(predData.response && predData.response.length > 0) {
-                        const p = predData.response[0];
-                        document.getElementById('destaque-xg-home').innerText = `xG: ${p.predictions.goals.home}`;
-                        document.getElementById('destaque-xg-away').innerText = `xG: ${p.predictions.goals.away}`;
-                        stats = `P(Casa): ${p.predictions.percent.home}, P(Fora): ${p.predictions.percent.away}`;
-                    }
+                    const prompt = `Faça a análise quantitativa do jogo ${topMatch.teams.home.name} x ${topMatch.teams.away.name}. Assuma o papel de um Quant. Retorne apenas um JSON puro com: {"market":"mercado estatístico", "selection":"sua entrada", "odd":"odd estimada padrao betano ex 1.50", "prob":"ex 84%", "risk":"Baixo", "tese":"Uma frase tecnica e persuasiva sobre o EV."}`;
+                    const res = await fetch('/api/gemini', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt: prompt }) });
+                    const data = await res.json();
+                    const parsed = JSON.parse(data.result.replace(/```json|```/g, '').trim());
 
-                    const prompt = `Analise o jogo ${topMatch.teams.home.name} x ${topMatch.teams.away.name} (${stats}). Retorne APENAS um objeto JSON válido (sem crases de markdown) com as chaves exatas: "mercado", "selecao", "odd" (apenas numero decimal, estipule valor justo), "prob" (ex: 80%), "risco" (Baixo/Médio), "ev" (ex: +5%), "tese" (texto curto).`;
-                    const aiRes = await fetch('/api/gemini', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt: prompt }) });
-                    const aiData = await aiRes.json();
-                    
-                    if(aiData.error) throw new Error(aiData.error);
-                    
-                    const jsonStr = aiData.result.replace(/```json|```/g, '').trim();
-                    const parsed = JSON.parse(jsonStr);
-
-                    // SALVA PARA O BOTAO "SIMULAR" PEGAR
-                    app.currentTopPick = {
-                        id: 'top-' + Math.random(),
-                        match: `${topMatch.teams.home.name} x ${topMatch.teams.away.name}`,
-                        market: parsed.mercado,
-                        selection: parsed.selecao,
-                        odd: parseFloat(parsed.odd) || 1.80,
-                        ev: parsed.ev || '+5%',
-                        confidence: parsed.prob
-                    };
-
-                    document.getElementById('destaque-market').innerText = parsed.mercado;
-                    document.getElementById('destaque-selection').innerText = parsed.selecao;
-                    document.getElementById('destaque-odd').innerText = '@' + parsed.odd;
+                    document.getElementById('destaque-market-raw').innerText = parsed.market;
+                    document.getElementById('destaque-selection').innerText = parsed.selection;
+                    document.getElementById('destaque-odd').innerText = parsed.odd;
                     document.getElementById('destaque-prob').innerText = parsed.prob;
-                    document.getElementById('destaque-ev').innerText = parsed.ev || '--';
-                    document.getElementById('destaque-risk').innerText = parsed.risco;
+                    document.getElementById('destaque-risk').innerText = parsed.risk;
                     document.getElementById('destaque-tese').innerText = parsed.tese;
 
-                } catch(e) { 
-                    console.log("Erro Top Pick", e); 
-                    document.getElementById('destaque-tese').innerText = "Motor IA encontrou instabilidade na extração deste jogo.";
-                }
-            },
-            addTopPickToSimulator: () => {
-                if(app.currentTopPick) { app.addToSimulator(app.currentTopPick); } else { ui.toast("Aguarde a IA finalizar a análise.", "error"); }
+                    app.currentTopPick = {
+                        id: 'top-' + Math.random(), match: `${topMatch.teams.home.name} x ${topMatch.teams.away.name}`,
+                        market: parsed.market, selection: parsed.selection, odd: parseFloat(parsed.odd) || 1.80, ev: '+EV', confidence: parsed.prob
+                    };
+                } catch(e) { console.log(e); document.getElementById('destaque-tese').innerText = "Motor IA offline ou dados insuficientes para esta partida."; }
             },
 
-            addToSimulator: (pick) => { app.simulatorPicks.push(pick); app.renderSimulator(); ui.toast("Adicionado à Gestão de Stake."); },
+            addTopPickToSimulator: () => {
+                if(app.currentTopPick) { app.addToSimulator(app.currentTopPick); } else { ui.toast("Aguarde a IA.", "error"); }
+            },
+
+            // SIMULADOR LATERAL (Layout Clean)
+            addToSimulator: (pick) => { app.simulatorPicks.push(pick); app.renderSimulator(); ui.toast("Adicionado ao Simulador."); },
             removeFromSimulator: (id) => { app.simulatorPicks = app.simulatorPicks.filter(p => p.id !== id); app.renderSimulator(); },
             renderSimulator: () => {
                 const container = document.getElementById('simulator-container');
-                if(!app.simulatorPicks.length) { container.innerHTML = `<div class="py-12 text-center opacity-50"><i class="ph-thin ph-calculator text-5xl mb-4 text-zinc-600"></i><p class="text-xs text-zinc-500">Adicione teses para simular.</p></div>`; return; }
+                if(!app.simulatorPicks.length) { container.innerHTML = `<div class="py-16 text-center opacity-40"><div class="w-16 h-16 rounded-2xl border-2 border-hb-muted border-dashed mx-auto flex items-center justify-center mb-4"><i class="ph-thin ph-calculator text-3xl text-hb-muted"></i></div><p class="text-[10px] uppercase font-mono tracking-widest text-hb-muted leading-relaxed">O simulador está vazio.<br>Adicione picks de uma análise.</p></div>`; return; }
+                
                 let totalOdd = 1; app.simulatorPicks.forEach(p => totalOdd *= p.odd); const lucro = (app.stake * totalOdd) - app.stake;
                 let html = '<div class="space-y-3 mb-6">';
-                app.simulatorPicks.forEach(p => { html += `<div class="bg-black border border-white/5 hover:border-hb-green/30 rounded-xl p-4 relative group"><button onclick="app.removeFromSimulator('${p.id}')" class="absolute top-3 right-3 text-zinc-600 opacity-0 group-hover:opacity-100 hover:text-red-400 transition-all"><i class="ph-bold ph-x"></i></button><p class="text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-1.5 truncate pr-6">${p.match}</p><p class="text-sm font-bold text-white mb-3">${p.market} - ${p.selection || ''}</p><div class="flex justify-between border-t border-white/5 pt-2"><span class="text-[10px] bg-hb-green/10 text-hb-green px-2 py-0.5 rounded font-mono font-bold">EV ${p.ev}</span><span class="text-sm font-mono text-white font-black bg-zinc-900 px-2 py-0.5 rounded">@${p.odd.toFixed(2)}</span></div></div>`; });
-                html += `</div><div class="space-y-4 bg-black border border-white/10 p-5 rounded-2xl shadow-xl"><label class="block text-[10px] uppercase font-mono text-zinc-500 tracking-widest">Sua Stake (R$)</label><input type="number" value="${app.stake}" oninput="app.stake=parseFloat(this.value)||0; app.renderSimulator();" class="w-full bg-zinc-900 border border-white/10 rounded-lg p-3 text-white font-mono focus:border-hb-green outline-none"><div class="flex justify-between text-xs font-mono pt-2"><span class="text-zinc-500">Odd Combinada:</span><span class="text-white font-bold">@${totalOdd.toFixed(2)}</span></div><div class="flex justify-between items-end border-t border-white/10 pt-4"><span class="text-zinc-500 uppercase font-bold text-[10px] tracking-widest">Lucro Líquido:</span><span class="text-hb-green font-black text-xl">R$ ${lucro.toFixed(2)}</span></div></div>`;
+                app.simulatorPicks.forEach(p => { html += `<div class="bg-[#0a0a0f] border border-[#1e1e2d] rounded-xl p-4 relative group"><button onclick="app.removeFromSimulator('${p.id}')" class="absolute top-3 right-3 text-hb-muted opacity-0 group-hover:opacity-100 hover:text-red-400 transition-all"><i class="ph-bold ph-x"></i></button><p class="text-[9px] font-mono text-hb-muted uppercase tracking-widest mb-1.5 truncate pr-6">${p.match}</p><p class="text-sm font-bold text-white mb-3">${p.market} - ${p.selection||''}</p><div class="flex justify-between items-center"><span class="text-[10px] text-hb-green font-mono font-bold">EV+ Calculado</span><span class="text-sm font-mono text-white font-black bg-black px-2 py-0.5 rounded border border-white/5">@${p.odd.toFixed(2)}</span></div></div>`; });
+                html += `</div><div class="bg-[#0a0a0f] border border-[#1e1e2d] p-5 rounded-xl"><label class="block text-[10px] uppercase font-mono text-hb-muted tracking-widest mb-2">Stake (R$)</label><input type="number" value="${app.stake}" oninput="app.stake=parseFloat(this.value)||0; app.renderSimulator();" class="w-full bg-[#050505] border border-[#1e1e2d] rounded-lg p-3 text-white font-mono focus:border-hb-green outline-none mb-4"><div class="flex justify-between text-xs font-mono pt-2 border-t border-[#1e1e2d]"><span class="text-hb-muted">Odd Combinada:</span><span class="text-white font-bold">@${totalOdd.toFixed(2)}</span></div><div class="flex justify-between items-end mt-4"><span class="text-hb-muted uppercase font-bold text-[10px] tracking-widest mb-1">Retorno Líquido:</span><span class="text-hb-green font-black text-xl">R$ ${lucro.toFixed(2)}</span></div></div>`;
                 container.innerHTML = html;
             }
         };
 
+        // MOTOR CÉTICO 23 PONTOS (MINDSET DE QUANT)
         window.auditorEngine = {
             run: async () => {
                 const indices = Array.from(app.selectedMatches);
-                if(!indices.length) return ui.toast("Selecione jogos.", "error");
+                if(!indices.length) return ui.toast("Selecione partidas em Oportunidades.", "error");
 
                 document.getElementById('auditor-results-card').classList.remove('hidden');
-                document.getElementById('auditor-results-card').innerHTML = `<div class="py-12 text-center"><i class="ph-bold ph-cpu text-5xl text-hb-green animate-pulse mb-4"></i><p class="text-white font-bold">Processando Cérebro de 23 Pontos...</p><p class="text-xs text-zinc-500 font-mono mt-2">Calculando Odds, EV e Múltiplas...</p></div>`;
+                document.getElementById('auditor-results-card').innerHTML = `<div class="py-16 flex flex-col items-center justify-center bg-[#0a0a0f] border border-[#1e1e2d] rounded-2xl"><i class="ph-bold ph-cpu text-5xl text-hb-green animate-pulse mb-4"></i><h3 class="text-lg font-black text-white">Raciocinando...</h3><p class="text-xs font-mono text-hb-muted mt-2 tracking-widest uppercase">Aplicando matriz de EV+ via Gemini 1.5 Pro</p></div>`;
 
                 const chosenMatches = indices.map(i => app.matches[i]);
                 const matchNames = chosenMatches.map(m => `${m.teams.home.name} x ${m.teams.away.name}`);
+                const context = document.getElementById('tipster-context').value;
 
-                let apiFootballStats = "";
-                for(const m of chosenMatches) {
-                    try {
-                        const predRes = await fetch(`https://v3.football.api-sports.io/predictions?fixture=${m.fixture.id}`, { headers: { "x-apisports-key": API_FOOTBALL_KEY } });
-                        const data = await predRes.json();
-                        if(data.response && data.response.length > 0) {
-                            const p = data.response[0];
-                            apiFootballStats += `[${m.teams.home.name} x ${m.teams.away.name}] | P(Casa): ${p.predictions.percent.home}, P(Fora): ${p.predictions.percent.away} | Gols(Casa): ${p.predictions.goals.home}, Gols(Fora): ${p.predictions.goals.away}\n`;
-                        }
-                    } catch(err) {}
-                }
-
+                // Força o modelo a "pensar" no Output entregando os Bilhetes e a lógica
                 const promptString = `
-[HUNTERBET — MOTOR DE AUDITORIA DE VALOR]
-Você é o HunterBet Elite Analyst.
+Como Quant Trader Sênior, aplique auditoria cética nos jogos: ${matchNames.join(', ')}. Contexto: ${context||'Sem viés humano'}.
+Obrigatório: ESTIME A ODD DE MERCADO. NUNCA use "N/A".
 
-JOGOS: ${matchNames.join(', ')}
-DADOS BASE DA API: ${apiFootballStats}
-
-[REGRA DE ODDS (OBRIGATÓRIO)]
-COMO ODDSMAKER DE ELITE, ESTIME A ODD PADRÃO BETANO BASEADA NA PROBABILIDADE. NUNCA DEVOLVA "N/A" PARA ODD OU EV.
-
-[SINTAXE OBRIGATÓRIA - USE EXATAMENTE '---' PARA SEPARAR OS BLOCOS]:
-Para CADA JOGO, gere o bloco:
+Sintaxe exata (separe blocos com '---'):
+Para cada jogo:
 ---
 [ANALISE_INDIVIDUAL]
 JOGO: [Casa x Fora]
-MERCADO: [Ex: Total de Gols]
-SELECAO: [Ex: Abaixo de 2.5]
-ODD: [X.XX - Obrigatorio Estimar]
+MERCADO: [Mercado]
+SELECAO: [Seleção]
+ODD: [X.XX - Numero Decimal]
 EV: [+X%]
-BOTTLENECK_TATICO: [1 frase do gargalo técnico]
-TESE_DE_VALOR: [Análise em 2 linhas]
-CONTRA_ARGUMENTO: [O que faria perder?]
+RACIOCINIO_QUANT: [Escreva aqui como você cruzou as estatísticas para chegar nesse valor, mostrando que você 'pensou' profundamente em 3 linhas densas]
+CONTRA_ARGUMENTO: [Fator que pode destruir a aposta]
 ---
 
-OBRIGATÓRIO: APÓS AS ANÁLISES INDIVIDUAIS, GERE ESTES DOIS BILHETES:
+APÓS ISSO, OS BILHETES (Mesma estrutura visual pedida):
 ---
 [BILHETE_MULTIPLA_VALOR]
 NOME: Múltipla de Valor (Risco Médio)
-ESTRATEGIA: Combina seleções com EV positivo e probabilidades de 70-80%.
-ODD_TOTAL: [X.XX - Calcule]
+ESTRATEGIA: Combinação de EV positivo.
+ODD_TOTAL: [X.XX]
 PROB_MEDIA: [~75%]
-SELECOES: [Liste como: "Jogo 1: Entrada A + Entrada B", etc]
+SELECOES: [Jogo 1: Entrada A + Entrada B \n Jogo 2...]
 ---
 [BILHETE_MULTIPLA_ELITE]
 NOME: Múltipla Elite (Alta Confiança)
-ESTRATEGIA: Foca nas maiores probabilidades (>80%) e segurança.
-ODD_TOTAL: [X.XX - Calcule]
+ESTRATEGIA: Foco em proteção máxima.
+ODD_TOTAL: [X.XX]
 PROB_MEDIA: [>80%]
-SELECOES: [Liste como: "Jogo 1: Entrada Forte", etc]
+SELECOES: [Jogo 1: Entrada Seca \n Jogo 2...]
 ---
 `;
-
                 try {
                     const response = await fetch('/api/gemini', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt: promptString }) });
                     const data = await response.json();
                     if(data.error) throw new Error(data.error);
 
                     let htmlOutput = "";
-                    const parts = data.result.split('---');
-                    
-                    parts.forEach(part => {
+                    data.result.split('---').forEach(part => {
                         if(part.includes('[ANALISE_INDIVIDUAL]')) {
                             htmlOutput += `
-                            <div class="bg-black border border-white/5 rounded-[12px] p-6 mb-6 card-premium">
-                                <div class="flex justify-between items-center mb-6 border-b border-white/5 pb-4">
-                                    <h4 class="font-heading font-black text-white text-xl">${extractField(part, 'JOGO')}</h4>
-                                    <span class="w-10 h-6 rounded-full border border-hb-green/50 flex items-center justify-center bg-hb-green/10"></span>
+                            <div class="card-premium p-6 mb-6">
+                                <h4 class="font-heading font-black text-white text-xl mb-6 pb-4 border-b border-[#1e1e2d]">${extractField(part, 'JOGO')}</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                                    <div class="bg-[#0a0a0f] p-4 rounded-xl border border-[#1e1e2d]"><span class="text-hb-muted block uppercase mb-1.5 text-[9px] tracking-widest font-mono">Mercado</span><span class="text-white font-bold text-sm">${extractField(part, 'MERCADO')}</span></div>
+                                    <div class="bg-[#0a0a0f] p-4 rounded-xl border border-[#1e1e2d]"><span class="text-hb-muted block uppercase mb-1.5 text-[9px] tracking-widest font-mono">Seleção</span><span class="text-white font-bold text-sm">${extractField(part, 'SELECAO')}</span></div>
+                                    <div class="bg-[#0a0a0f] p-4 rounded-xl border border-[#1e1e2d]"><span class="text-hb-muted block uppercase mb-1.5 text-[9px] tracking-widest font-mono">Odd Est.</span><span class="text-white font-black text-lg">@${extractField(part, 'ODD')}</span></div>
+                                    <div class="bg-[#0a0a0f] p-4 rounded-xl border border-[#1e1e2d]"><span class="text-hb-muted block uppercase mb-1.5 text-[9px] tracking-widest font-mono">EV+</span><span class="text-hb-green font-black text-lg">${extractField(part, 'EV')}</span></div>
                                 </div>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                                    <div class="bg-[#121214] p-4 rounded-xl border border-white/5"><span class="text-zinc-500 block uppercase mb-1.5 text-[9px] tracking-widest font-mono">Mercado</span><span class="text-white font-bold text-sm">${extractField(part, 'MERCADO')}</span></div>
-                                    <div class="bg-[#121214] p-4 rounded-xl border border-white/5"><span class="text-zinc-500 block uppercase mb-1.5 text-[9px] tracking-widest font-mono">Seleção Alvo</span><span class="text-white font-bold text-sm">${extractField(part, 'SELECAO')}</span></div>
-                                    <div class="bg-[#121214] p-4 rounded-xl border border-white/5"><span class="text-zinc-500 block uppercase mb-1.5 text-[9px] tracking-widest font-mono">Odd Est.</span><span class="text-white font-black text-lg">@${extractField(part, 'ODD')}</span></div>
-                                    <div class="bg-[#121214] p-4 rounded-xl border border-white/5"><span class="text-zinc-500 block uppercase mb-1.5 text-[9px] tracking-widest font-mono">Calculo EV</span><span class="text-hb-green font-black text-lg">${extractField(part, 'EV')}</span></div>
+                                <div class="space-y-4 text-sm bg-[#050505] border border-[#1e1e2d] rounded-xl p-5">
+                                    <p><strong class="text-hb-green font-mono text-[10px] uppercase block mb-1">Raciocínio Quantitativo da IA</strong><span class="text-zinc-300">${extractField(part, 'RACIOCINIO_QUANT')}</span></p>
+                                    <p><strong class="text-red-400 font-mono text-[10px] uppercase block mb-1">Contra-Argumento</strong><span class="text-zinc-500 italic">"${extractField(part, 'CONTRA_ARGUMENTO')}"</span></p>
                                 </div>
-                                <div class="space-y-5 text-sm bg-[#121214]/50 border border-white/5 rounded-xl p-6">
-                                    <p><strong class="text-zinc-500 font-mono text-[10px] uppercase block mb-2 flex items-center gap-2"><i class="ph-bold ph-target text-zinc-400"></i> Bottleneck Tático</strong><span class="text-zinc-300 leading-relaxed block">${extractField(part, 'BOTTLENECK_TATICO')}</span></p>
-                                    <p><strong class="text-hb-green font-mono text-[10px] uppercase block mb-2 flex items-center gap-2"><i class="ph-bold ph-trend-up text-hb-green"></i> Tese de Valor (Quantitativa)</strong><span class="text-zinc-300 leading-relaxed block">${extractField(part, 'TESE_DE_VALOR')}</span></p>
-                                    <p><strong class="text-red-400 font-mono text-[10px] uppercase block mb-2 flex items-center gap-2"><i class="ph-bold ph-shield-warning text-red-400"></i> Contra-Argumento Cético</strong><span class="text-zinc-500 italic leading-relaxed block">"${extractField(part, 'CONTRA_ARGUMENTO')}"</span></p>
-                                </div>
-                                <div class="mt-4 flex justify-end">
-                                    <button onclick="app.addToSimulator({id: '${Math.random()}', match: '${extractField(part, 'JOGO')}', market: '${extractField(part, 'MERCADO')}', selection: '${extractField(part, 'SELECAO')}', odd: ${parseFloat(extractField(part, 'ODD')) || 1.80}, ev: '${extractField(part, 'EV')}', confidence: 'N/A'})" class="bg-white hover:bg-zinc-200 text-black text-xs font-heading font-black px-6 py-3 rounded-xl uppercase tracking-wider transition-colors shadow-glow-white">
-                                        + Enviar p/ Simulador
-                                    </button>
-                                </div>
+                                <div class="mt-5 flex justify-end"><button onclick="app.addToSimulator({id:'${Math.random()}', match:'${extractField(part, 'JOGO')}', market:'${extractField(part, 'MERCADO')}', selection:'${extractField(part, 'SELECAO')}', odd:${parseFloat(extractField(part, 'ODD'))||1.50}, ev:'${extractField(part, 'EV')}'})" class="bg-white hover:bg-zinc-200 text-black text-xs font-bold px-6 py-2.5 rounded-lg transition-colors">+ Simular Aposta</button></div>
                             </div>`;
                         } else if(part.includes('[BILHETE_MULTIPLA_VALOR]')) {
                             htmlOutput += `
-                            <div class="bg-amber-500/5 border border-amber-500/30 rounded-2xl p-6 mb-6">
-                                <div class="flex justify-between items-center mb-4 pb-4 border-b border-amber-500/10">
-                                    <div><h4 class="font-heading font-black text-amber-500 text-xl flex items-center gap-2"><i class="ph-fill ph-ticket"></i> Múltipla de Valor (Risco Médio)</h4><p class="text-[10px] font-mono text-amber-500/70 mt-1 uppercase tracking-widest">Probabilidade: ${extractField(part, 'PROB_MEDIA')}</p></div>
-                                    <span class="text-2xl font-black text-white bg-black px-4 py-2 rounded-xl border border-amber-500/20 shadow-[0_0_15px_rgba(245,158,11,0.15)]">@${extractField(part, 'ODD_TOTAL')}</span>
+                            <div class="bg-[#0a0a0f] border border-[#f59e0b]/30 rounded-2xl p-6 mb-6 relative overflow-hidden">
+                                <div class="absolute left-0 top-0 bottom-0 w-1 bg-[#f59e0b]"></div>
+                                <div class="flex justify-between items-center mb-4 pb-4 border-b border-white/5">
+                                    <div><h4 class="font-heading font-black text-[#f59e0b] text-xl">${extractField(part, 'NOME')}</h4><p class="text-[10px] font-mono text-zinc-500 mt-1 uppercase tracking-widest">Prob: ${extractField(part, 'PROB_MEDIA')}</p></div>
+                                    <span class="text-2xl font-black text-white bg-black px-4 py-2 rounded-xl border border-white/10">@${extractField(part, 'ODD_TOTAL')}</span>
                                 </div>
-                                <p class="text-sm text-zinc-300 mb-4 leading-relaxed"><strong class="text-amber-500 text-[10px] font-mono uppercase block mb-1">Estratégia:</strong> ${extractField(part, 'ESTRATEGIA')}</p>
-                                <div class="text-sm font-mono text-amber-100/80 bg-black/50 p-4 rounded-xl border border-amber-500/10 leading-loose">${extractField(part, 'SELECOES').replace(/\n/g, '<br>')}</div>
+                                <p class="text-sm text-zinc-300 mb-4"><strong class="text-[#f59e0b] text-[10px] font-mono uppercase block mb-1">Estratégia</strong> ${extractField(part, 'ESTRATEGIA')}</p>
+                                <div class="text-sm font-mono text-zinc-400 bg-black p-4 rounded-xl border border-white/5">${extractField(part, 'SELECOES').replace(/\n/g, '<br>')}</div>
                             </div>`;
                         } else if(part.includes('[BILHETE_MULTIPLA_ELITE]')) {
                             htmlOutput += `
-                            <div class="bg-indigo-500/5 border border-indigo-500/30 rounded-2xl p-6 mb-6">
-                                <div class="flex justify-between items-center mb-4 pb-4 border-b border-indigo-500/10">
-                                    <div><h4 class="font-heading font-black text-indigo-400 text-xl flex items-center gap-2"><i class="ph-fill ph-crown"></i> Múltipla Elite (Alta Confiança)</h4><p class="text-[10px] font-mono text-indigo-400/70 mt-1 uppercase tracking-widest">Probabilidade: ${extractField(part, 'PROB_MEDIA')}</p></div>
-                                    <span class="text-2xl font-black text-white bg-black px-4 py-2 rounded-xl border border-indigo-500/20 shadow-[0_0_15px_rgba(99,102,241,0.15)]">@${extractField(part, 'ODD_TOTAL')}</span>
+                            <div class="bg-[#0a0a0f] border border-[#6366f1]/30 rounded-2xl p-6 mb-6 relative overflow-hidden">
+                                <div class="absolute left-0 top-0 bottom-0 w-1 bg-[#6366f1]"></div>
+                                <div class="flex justify-between items-center mb-4 pb-4 border-b border-white/5">
+                                    <div><h4 class="font-heading font-black text-[#818cf8] text-xl">${extractField(part, 'NOME')}</h4><p class="text-[10px] font-mono text-zinc-500 mt-1 uppercase tracking-widest">Prob: ${extractField(part, 'PROB_MEDIA')}</p></div>
+                                    <span class="text-2xl font-black text-white bg-black px-4 py-2 rounded-xl border border-white/10">@${extractField(part, 'ODD_TOTAL')}</span>
                                 </div>
-                                <p class="text-sm text-zinc-300 mb-4 leading-relaxed"><strong class="text-indigo-400 text-[10px] font-mono uppercase block mb-1">Estratégia:</strong> ${extractField(part, 'ESTRATEGIA')}</p>
-                                <div class="text-sm font-mono text-indigo-100/80 bg-black/50 p-4 rounded-xl border border-indigo-500/10 leading-loose">${extractField(part, 'SELECOES').replace(/\n/g, '<br>')}</div>
+                                <p class="text-sm text-zinc-300 mb-4"><strong class="text-[#818cf8] text-[10px] font-mono uppercase block mb-1">Estratégia</strong> ${extractField(part, 'ESTRATEGIA')}</p>
+                                <div class="text-sm font-mono text-zinc-400 bg-black p-4 rounded-xl border border-white/5">${extractField(part, 'SELECOES').replace(/\n/g, '<br>')}</div>
                             </div>`;
                         }
                     });
                     document.getElementById('auditor-results-card').innerHTML = htmlOutput;
-                    ui.toast("Auditoria concluída com Bilhetes de Valor.");
+                    ui.toast("Auditoria concluída.");
                 } catch (err) {
-                    document.getElementById('auditor-results-card').innerHTML = `<div class="p-6 text-red-400 font-mono text-center border border-red-500/30 rounded-xl bg-red-950/20">Erro IA: ${err.message}</div>`;
+                    document.getElementById('auditor-results-card').innerHTML = `<div class="p-6 border border-red-500/30 rounded-xl bg-red-950/20 text-red-400 font-mono text-center">Falha na IA: ${err.message}</div>`;
                 }
             }
         };
 
-        function extractField(text, fieldName) { const regex = new RegExp(`${fieldName}:\\s*(.*)(?=\\n[A-Z_\\s]+:|$)`, 'i'); const match = text.match(regex); return match ? match[1].trim() : ''; }
-
+        function extractField(text, fieldName) { const m = text.match(new RegExp(`${fieldName}:\\s*(.*)(?=\\n[A-Z_\\s]+:|$)`, 'i')); return m ? m[1].trim() : ''; }
         document.addEventListener('DOMContentLoaded', () => { auth.init(); });
     </script>
 </body>
