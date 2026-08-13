@@ -13,8 +13,8 @@ export default async function handler(req, res) {
 
     if (!apiKey) return res.status(500).json({ error: "Chave GEMINI_API_KEY ausente na Vercel." });
 
-    // AQUI ESTAVA O ERRO DO GOOGLE. MUDAMOS PARA O 1.5-PRO ESTÁVEL.
-    const apiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`, {
+    // Rota corrigida para o modelo PRO mais recente e inteligente
+    const apiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
