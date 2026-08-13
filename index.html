@@ -46,15 +46,8 @@
         .spa-view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Estilos dos Cards Baseados na Print */
-        .card-analysis { background: #0a0a0f; border: 1px solid #1e1e2d; border-radius: 12px; transition: all 0.3s ease; }
-        .box-metric { background: #121214; border: 1px solid rgba(255,255,255,0.03); border-radius: 12px; padding: 16px; }
-        .box-rationale { background: #121214; border: 1px solid rgba(255,255,255,0.03); border-radius: 12px; padding: 24px; }
-        
-        .card-multiple { background: #0a0a0f; border-radius: 16px; padding: 24px; margin-bottom: 24px; }
-        .box-strategy { background: #121214; border: 1px solid rgba(255,255,255,0.03); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
-        .box-selections { background: #000000; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #d4d4d8; line-height: 1.8; }
-
+        .card-premium { background: #0d0d14; border: 1px solid #1e1e2d; border-radius: 16px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-premium:hover { border-color: rgba(0, 230, 118, 0.3); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
         .row-premium { background: #0a0a0f; border: 1px solid #1e1e2d; border-radius: 12px; transition: all 0.2s; }
         .row-premium:hover { border-color: rgba(255,255,255,0.15); background: #12121a; }
 
@@ -74,7 +67,7 @@
 
     <div id="toast-container"></div>
 
-    <!-- TELA DE LOGIN -->
+    <!-- TELA DE LOGIN SEGURA (SEM HARDCODE) -->
     <div id="auth-screen" class="fixed inset-0 bg-[#020202] z-[200] flex items-center justify-center p-4" style="background-image: radial-gradient(rgba(0, 230, 118, 0.05) 1px, transparent 1px); background-size: 30px 30px;">
         <div class="w-full max-w-sm bg-hb-panel rounded-2xl p-8 border border-hb-border shadow-[0_10px_40px_rgba(0,0,0,0.8)]">
             <div class="flex items-center gap-3 mb-8 justify-center">
@@ -82,14 +75,15 @@
                 <div><h1 class="text-2xl font-black text-white tracking-tight">Hunter<span class="text-hb-green">Bet</span></h1><p class="text-[9px] text-hb-green uppercase tracking-widest font-bold">Terminal Pro</p></div>
             </div>
             <div class="space-y-4">
-                <input type="text" id="login-user" value="tzn2510" placeholder="Usuário" class="w-full bg-[#050505] border border-hb-border rounded-xl px-4 py-3 text-white focus:border-hb-green outline-none font-mono text-sm transition-colors">
-                <input type="password" id="login-pass" value="vitor220419" placeholder="Senha" class="w-full bg-[#050505] border border-hb-border rounded-xl px-4 py-3 text-white focus:border-hb-green outline-none font-mono text-sm transition-colors">
+                <input type="text" id="login-user" placeholder="Usuário" autocomplete="off" class="w-full bg-[#050505] border border-hb-border rounded-xl px-4 py-3 text-white focus:border-hb-green outline-none font-mono text-sm transition-colors">
+                <input type="password" id="login-pass" placeholder="Senha" autocomplete="off" class="w-full bg-[#050505] border border-hb-border rounded-xl px-4 py-3 text-white focus:border-hb-green outline-none font-mono text-sm transition-colors">
                 <button onclick="auth.login()" class="w-full bg-hb-green hover:bg-hb-greenDark text-black font-bold py-3.5 rounded-xl uppercase tracking-widest transition-colors mt-2 text-sm shadow-[0_0_15px_rgba(0,230,118,0.3)]">Acessar Sistema</button>
             </div>
         </div>
     </div>
 
-    <div id="sidebar-overlay" onclick="app.toggleSidebar()" class="fixed inset-0 bg-black/80 z-40 hidden xl:hidden backdrop-blur-sm"></div>
+    <!-- OVERLAY MOBILE -->
+    <div id="sidebar-overlay" onclick="app.toggleSidebar()" class="fixed inset-0 bg-black/80 z-40 hidden xl:hidden backdrop-blur-sm transition-opacity"></div>
 
     <!-- SIDEBAR -->
     <aside id="mobile-sidebar" class="w-[260px] flex-shrink-0 flex-col border-r border-hb-border bg-hb-panel fixed inset-y-0 left-0 transform -translate-x-full xl:translate-x-0 xl:relative transition-transform duration-300 ease-in-out z-50 flex">
@@ -115,7 +109,6 @@
                 <p class="text-[10px] uppercase tracking-widest text-hb-muted font-bold mb-3 px-3">Inteligência</p>
                 <nav class="flex flex-col gap-1.5">
                     <button onclick="app.navigate('auditor')" data-path="auditor" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-zinc-400 text-left"><i class="ph-fill ph-cpu text-lg"></i> <span class="font-medium text-sm">Motor Cético</span><span class="ml-auto text-[8px] bg-hb-green/10 text-hb-green px-1.5 py-0.5 rounded border border-hb-green/20 uppercase font-bold tracking-widest">Online</span></button>
-                    <button onclick="ui.toast('Histórico em desenvolvimento.')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-zinc-400 text-left opacity-50 cursor-not-allowed"><i class="ph-fill ph-clock-counter-clockwise text-lg"></i> <span class="font-medium text-sm">Histórico</span></button>
                 </nav>
             </div>
 
@@ -128,7 +121,7 @@
         </div>
 
         <div class="p-4 border-t border-hb-border bg-[#0a0a0f]">
-            <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-white/5 transition-colors cursor-pointer" onclick="auth.logout()">
+            <div class="flex items-center gap-3 p-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 transition-colors cursor-pointer" onclick="auth.logout()">
                 <div class="w-9 h-9 rounded-lg bg-hb-green flex items-center justify-center font-black text-xs text-black" id="user-avatar">US</div>
                 <div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate" id="user-name">Usuário</p><p class="text-[10px] text-hb-green font-mono font-bold mt-0.5" id="user-role">Sessão Ativa</p></div>
                 <i class="ph-bold ph-sign-out text-hb-muted hover:text-white"></i>
@@ -139,7 +132,6 @@
     <!-- ÁREA PRINCIPAL -->
     <main class="flex-1 flex flex-col min-w-0 relative overflow-hidden bg-[#050505] bg-texture">
         
-        <!-- Header -->
         <header class="h-20 flex-shrink-0 flex items-center justify-between px-6 md:px-8 glass-header z-30 sticky top-0">
             <div class="flex items-center gap-4">
                 <button onclick="app.toggleSidebar()" class="xl:hidden text-white text-2xl hover:text-hb-green transition-colors"><i class="ph-bold ph-list"></i></button>
@@ -164,10 +156,12 @@
 
             <!-- 1. DASHBOARD -->
             <section id="view-dashboard" class="spa-view active max-w-5xl mx-auto space-y-8">
-                <div><h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight mb-1">Painel Executivo</h2><p class="text-sm text-hb-muted">Visão inteligente dos jogos de hoje extraídos da API-Football.</p></div>
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight mb-1">Painel Executivo</h2>
+                    <p class="text-sm text-hb-muted">Visão inteligente dos jogos de hoje extraídos da API-Football.</p>
+                </div>
 
-                <!-- Destaque -->
-                <div class="card-analysis p-1 relative overflow-hidden" style="background: linear-gradient(180deg, rgba(0,230,118,0.1) 0%, rgba(10,10,15,1) 100%);">
+                <div class="card-premium p-1 relative overflow-hidden" style="background: linear-gradient(180deg, rgba(0,230,118,0.1) 0%, rgba(13,13,20,1) 100%);">
                     <div class="absolute top-0 right-0 w-64 h-64 bg-hb-green/5 blur-[100px] rounded-full pointer-events-none"></div>
                     <div class="p-4 sm:p-6 relative z-10">
                         <div class="flex flex-wrap justify-between items-center gap-2 mb-6">
@@ -181,6 +175,7 @@
                         <div id="destaque-skeleton" class="space-y-4">
                             <div class="h-20 w-full rounded-xl shimmer"></div>
                             <div class="h-10 w-2/3 rounded-lg shimmer"></div>
+                            <div class="h-4 w-1/2 rounded shimmer"></div>
                         </div>
 
                         <div id="destaque-content" class="hidden">
@@ -215,10 +210,9 @@
                     </div>
                 </div>
 
-                <!-- Top Oportunidades -->
                 <div>
                     <div class="flex justify-between items-center mb-5">
-                        <h3 class="text-sm font-bold text-white uppercase tracking-widest flex items-center gap-2"><i class="ph-bold ph-lightning text-hb-green"></i> Top Oportunidades do Dia</h3>
+                        <h3 class="text-sm font-bold text-white uppercase tracking-widest flex items-center gap-2"><i class="ph-bold ph-lightning text-hb-green"></i> Top Oportunidades</h3>
                         <button onclick="app.navigate('oportunidades')" class="text-xs text-hb-muted hover:text-hb-green font-medium transition-colors hidden sm:flex items-center gap-1">Central completa <i class="ph-bold ph-arrow-right"></i></button>
                     </div>
                     <div class="space-y-3" id="top-ops-container">
@@ -232,7 +226,7 @@
             <section id="view-oportunidades" class="spa-view max-w-5xl mx-auto space-y-6">
                 <div><h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight mb-1">Central de Oportunidades</h2><p class="text-sm text-hb-muted">Filtre as ligas e selecione os jogos que deseja submeter ao Motor de Auditoria.</p></div>
                 
-                <div class="card-analysis p-4 sm:p-6">
+                <div class="card-premium p-4 sm:p-6">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                         <div class="flex w-full md:w-auto gap-3">
                             <div class="relative flex-1 md:w-64">
@@ -242,7 +236,8 @@
                         </div>
                         <button onclick="app.navigate('auditor')" class="w-full md:w-auto bg-hb-green hover:bg-hb-greenDark text-black font-bold px-6 py-2.5 rounded-lg text-sm transition-colors flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(0,230,118,0.2)]">Auditar Selecionados <i class="ph-bold ph-arrow-right"></i></button>
                     </div>
-                    <div id="full-matches-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-4 max-h-[60vh] overflow-y-auto pr-2 no-scrollbar">
+
+                    <div id="full-matches-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-4 max-h-[60vh] overflow-y-auto pr-1 no-scrollbar">
                         <div class="p-8 text-center text-hb-muted text-sm col-span-full">Aguardando API...</div>
                     </div>
                 </div>
@@ -251,7 +246,7 @@
             <!-- 3. AO VIVO -->
             <section id="view-aovivo" class="spa-view max-w-5xl mx-auto space-y-6">
                 <div><h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight mb-1 flex items-center gap-3">Monitoramento Ao Vivo <span class="px-2 py-0.5 rounded text-[10px] bg-red-500/20 text-red-500 font-bold uppercase tracking-widest border border-red-500/30 animate-pulse hidden sm:inline-block">In-Play</span></h2><p class="text-sm text-hb-muted">Partidas rolando agora. Clique para atualizar o radar.</p></div>
-                <div class="card-analysis p-4 sm:p-6">
+                <div class="card-premium p-4 sm:p-6">
                     <button onclick="app.loadFixtures('live')" class="w-full bg-[#0a0a0f] border border-[#1e1e2d] py-4 rounded-xl text-sm font-bold text-white hover:bg-[#12121a] hover:border-hb-green/50 transition-all mb-6 flex items-center justify-center gap-2 shadow-sm"><i class="ph-bold ph-broadcast text-red-500 text-lg"></i> Varrer Jogos Ao Vivo (API-Football)</button>
                     <div id="live-matches-list" class="grid grid-cols-1 lg:grid-cols-2 gap-4 max-h-[60vh] overflow-y-auto pr-1 no-scrollbar">
                         <div class="p-8 text-center text-hb-muted text-sm col-span-full">Nenhum rastreamento ativo.</div>
@@ -259,15 +254,15 @@
                 </div>
             </section>
 
-            <!-- 4. MOTOR DE AUDITORIA (CÉTICO) -->
+            <!-- 4. MOTOR DE AUDITORIA -->
             <section id="view-auditor" class="spa-view max-w-5xl mx-auto space-y-6">
                 <div><h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight mb-1">Motor Cético (Gemini Pro)</h2><p class="text-sm text-hb-muted">Processamento profundo para validação de EV+ e Múltiplas. Exclusivo para jogos selecionados.</p></div>
                 
-                <div class="card-analysis p-4 sm:p-6 space-y-6">
+                <div class="card-premium p-4 sm:p-6 space-y-6 shadow-premium">
                     <div>
                         <label class="block text-[10px] uppercase font-bold text-hb-muted mb-3 tracking-widest border-b border-white/5 pb-2">Jogos Selecionados na Fila</label>
-                        <div id="selected-auditor-matches" class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <div class="p-4 bg-[#0a0a0f] border border-[#1e1e2d] rounded-xl text-sm text-hb-muted text-center col-span-full">A fila está vazia. Volte em Oportunidades.</div>
+                        <div id="selected-auditor-matches" class="flex flex-col gap-3">
+                            <div class="p-4 bg-[#0a0a0f] border border-[#1e1e2d] rounded-xl text-sm text-hb-muted text-center w-full">A fila está vazia. Volte em Oportunidades.</div>
                         </div>
                     </div>
                     <div>
@@ -283,10 +278,10 @@
             <!-- 5. ADMIN -->
             <section id="view-admin" class="spa-view max-w-5xl mx-auto space-y-6">
                 <div><h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight mb-1">Gestão de Contas</h2><p class="text-sm text-hb-muted">Crie logins para seus clientes.</p></div>
-                <div class="card-analysis p-4 sm:p-6">
+                <div class="card-premium p-4 sm:p-6">
                     <div class="flex flex-col md:flex-row gap-4 mb-8">
-                        <input type="text" id="new-user" placeholder="Nome de Usuário" class="flex-1 bg-[#050505] border border-[#1e1e2d] rounded-lg px-4 py-3 text-sm text-white focus:border-hb-green outline-none">
-                        <input type="text" id="new-pass" placeholder="Senha" class="flex-1 bg-[#050505] border border-[#1e1e2d] rounded-lg px-4 py-3 text-sm text-white focus:border-hb-green outline-none">
+                        <input type="text" id="new-user" placeholder="Nome de Usuário" autocomplete="off" class="flex-1 bg-[#050505] border border-[#1e1e2d] rounded-lg px-4 py-3 text-sm text-white focus:border-hb-green outline-none">
+                        <input type="text" id="new-pass" placeholder="Senha" autocomplete="off" class="flex-1 bg-[#050505] border border-[#1e1e2d] rounded-lg px-4 py-3 text-sm text-white focus:border-hb-green outline-none">
                         <button onclick="admin.addUser()" class="bg-hb-green hover:bg-hb-greenDark text-black font-bold px-8 py-3 rounded-lg text-sm transition-colors whitespace-nowrap"><i class="ph-bold ph-user-plus mr-1"></i> Criar Conta</button>
                     </div>
                     <div class="overflow-x-auto">
@@ -312,6 +307,7 @@
     <script>
         const API_FOOTBALL_KEY = "1fc4ead1c40a7b6ac08d5181427890ef";
 
+        // INTERFACE
         window.ui = {
             toast: (msg, type = 'info') => {
                 const c = document.getElementById('toast-container'); const t = document.createElement('div');
@@ -323,6 +319,7 @@
             setDate: () => { const options = { day: '2-digit', month: '2-digit', year:'numeric' }; document.getElementById('current-date').innerText = new Date().toLocaleDateString('pt-BR', options); }
         };
 
+        // ADMIN
         window.admin = {
             render: () => {
                 const users = JSON.parse(localStorage.getItem('hb_users')) || [];
@@ -339,13 +336,20 @@
             removeUser: (idx) => { let users = JSON.parse(localStorage.getItem('hb_users')); users.splice(idx, 1); localStorage.setItem('hb_users', JSON.stringify(users)); admin.render(); ui.toast("Acesso removido."); }
         };
 
+        // AUTH (Zero Hardcode Inicial)
         window.auth = {
             init: () => {
                 ui.setDate();
                 let users = JSON.parse(localStorage.getItem('hb_users'));
                 if(!users) { users = [{ user: 'tzn2510', pass: 'vitor220419', role: 'master' }]; localStorage.setItem('hb_users', JSON.stringify(users)); }
+                
                 const session = JSON.parse(localStorage.getItem('hb_session'));
-                if(session) { auth.startSession(session); }
+                if(session) { 
+                    auth.startSession(session); 
+                } else {
+                    document.getElementById('login-user').value = ''; // Limpa pra não vazar
+                    document.getElementById('login-pass').value = '';
+                }
             },
             login: () => {
                 const u = document.getElementById('login-user').value.trim(); const p = document.getElementById('login-pass').value.trim();
@@ -361,6 +365,7 @@
             logout: () => { localStorage.removeItem('hb_session'); location.reload(); }
         };
 
+        // APLICATIVO
         window.app = {
             matches: [], selectedMatches: new Set(), simulatorPicks: [], stake: 100.00, currentTopPick: null,
             
@@ -370,7 +375,7 @@
             },
 
             navigate: (viewId) => {
-                ui.setLoader(true, "Carregando...");
+                ui.setLoader(true, "Carregando módulo...");
                 setTimeout(() => {
                     document.querySelectorAll('.spa-view').forEach(v => v.classList.remove('active')); document.getElementById(`view-${viewId}`)?.classList.add('active');
                     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); document.querySelector(`.nav-link[data-path="${viewId}"]`)?.classList.add('active');
@@ -413,6 +418,7 @@
             renderOportunidades: () => {
                 const container = document.getElementById('full-matches-grid');
                 if(!app.matches.length) { container.innerHTML = '<div class="col-span-full p-8 text-center text-hb-muted">Vazio.</div>'; return; }
+
                 const filterLeague = document.getElementById('league-filter').value;
                 const searchTerm = (document.getElementById('global-search').value || '').toLowerCase();
                 
@@ -428,6 +434,7 @@
                     const chk = app.selectedMatches.has(m.origIdx) ? 'checked' : '';
                     const time = new Date(m.fixture.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                     const isSelectedClass = app.selectedMatches.has(m.origIdx) ? 'border-hb-green bg-hb-green/5' : 'border-[#1e1e2d] bg-[#0a0a0f] hover:border-white/20';
+                    
                     return `
                     <div class="rounded-xl p-4 sm:p-5 border transition-all duration-300 cursor-pointer group ${isSelectedClass}" onclick="app.toggleMatch(${m.origIdx})">
                         <div class="flex justify-between items-start mb-4">
@@ -461,7 +468,10 @@
                             <div class="w-1/5 text-center text-lg font-black text-white bg-[#1e1e2d] px-2 py-0.5 rounded">${m.goals.home||0} - ${m.goals.away||0}</div>
                             <h4 class="text-xs sm:text-sm font-bold text-white w-2/5 text-right truncate">${m.teams.away.name}</h4>
                         </div>
-                        <div class="mt-4 flex justify-between items-center"><span class="text-[10px] text-zinc-500">Clique para selecionar</span><input type="checkbox" ${chk} class="custom-checkbox" onclick="event.stopPropagation(); app.toggleMatch(${idx})"></div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-[10px] text-zinc-500">Clique para auditar</span>
+                            <input type="checkbox" ${chk} class="custom-checkbox" onclick="event.stopPropagation(); app.toggleMatch(${idx})">
+                        </div>
                     </div>`;
                 }).join('');
             },
@@ -470,8 +480,19 @@
             
             updateAuditorBox: () => {
                 const box = document.getElementById('selected-auditor-matches'); const indices = Array.from(app.selectedMatches);
-                if(!indices.length) { box.innerHTML = `<div class="p-4 bg-[#0a0a0f] border border-[#1e1e2d] rounded-xl text-sm text-hb-muted text-center col-span-full">A fila está vazia. Volte em Oportunidades.</div>`; return; }
-                box.innerHTML = indices.map(i => `<div class="p-4 bg-[#0a0a0f] border border-[#1e1e2d] rounded-xl flex justify-between items-center shadow-sm hover:border-white/10 transition-colors"><div class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-hb-green"></span><span class="text-sm font-bold text-white">${app.matches[i].teams.home.name} x ${app.matches[i].teams.away.name}</span></div><button onclick="app.toggleMatch(${i})" class="text-hb-muted hover:text-red-400 bg-black w-8 h-8 rounded-lg flex items-center justify-center border border-white/5 transition-colors"><i class="ph-bold ph-trash"></i></button></div>`).join('');
+                if(!indices.length) { box.innerHTML = `<div class="p-4 bg-[#0a0a0f] border border-[#1e1e2d] rounded-xl text-sm text-hb-muted text-center w-full">A fila está vazia. Volte em Oportunidades.</div>`; return; }
+                
+                // Correção Mobile Flex-Shrink e Truncate
+                box.innerHTML = indices.map(i => `
+                <div class="p-3 sm:p-4 bg-[#0a0a0f] border border-[#1e1e2d] rounded-xl flex justify-between items-center shadow-sm hover:border-white/10 transition-colors w-full">
+                    <div class="flex items-center gap-3 flex-1 min-w-0 pr-2">
+                        <span class="w-2 h-2 rounded-full bg-hb-green flex-shrink-0"></span>
+                        <span class="text-xs sm:text-sm font-bold text-white truncate">${app.matches[i].teams.home.name} x ${app.matches[i].teams.away.name}</span>
+                    </div>
+                    <button onclick="app.toggleMatch(${i})" class="text-hb-muted hover:text-red-400 bg-black w-8 h-8 rounded-lg flex items-center justify-center border border-white/5 transition-colors flex-shrink-0">
+                        <i class="ph-bold ph-trash"></i>
+                    </button>
+                </div>`).join('');
             },
 
             buildDashboard: async () => {
@@ -497,8 +518,8 @@
                             <div class="text-left md:text-center"><p class="text-[9px] uppercase text-hb-muted font-bold tracking-widest mb-1">Risco</p><p class="text-xs font-bold text-hb-green bg-hb-green/10 px-2 py-0.5 rounded inline-block">Baixo</p></div>
                             <div class="text-center"><p class="text-[9px] uppercase text-hb-muted font-bold tracking-widest mb-1">Odd</p><p class="text-base font-black text-fuchsia-400 font-mono">@${mockOdd}</p></div>
                             <div class="flex items-center gap-2">
-                                <button class="w-9 h-9 rounded-xl bg-black border border-white/10 hover:border-hb-green text-white flex items-center justify-center transition-all" onclick="app.navigate('auditor'); ui.toast('Selecione em Oportunidades.')"><i class="ph-bold ph-cpu"></i></button>
-                                <button class="w-9 h-9 rounded-xl bg-black border border-white/10 hover:border-hb-green text-white flex items-center justify-center transition-all" onclick="app.addToSimulator({id:'${Math.random()}', match:'${m.teams.home.name} x ${m.teams.away.name}', market:'Vencedor Final', selection:'Casa', odd:${mockOdd}, ev:'+EV'})"><i class="ph-bold ph-plus"></i></button>
+                                <button class="w-9 h-9 rounded-xl bg-black border border-white/10 hover:border-hb-green text-white flex items-center justify-center transition-all" onclick="app.navigate('auditor'); ui.toast('Selecione em Oportunidades.')" title="Auditar"><i class="ph-bold ph-cpu"></i></button>
+                                <button class="w-9 h-9 rounded-xl bg-black border border-white/10 hover:border-hb-green text-white flex items-center justify-center transition-all" onclick="app.addToSimulator({id:'${Math.random()}', match:'${m.teams.home.name} x ${m.teams.away.name}', market:'Vencedor Final', selection:'Casa', odd:${mockOdd}, ev:'+EV'})" title="Simular"><i class="ph-bold ph-plus"></i></button>
                             </div>
                         </div>
                     </div>`;
@@ -564,7 +585,6 @@
                 const matchNames = chosenMatches.map(m => `${m.teams.home.name} x ${m.teams.away.name}`);
                 const context = document.getElementById('tipster-context').value;
 
-                // Busca paralela para velocidade máxima
                 const predictionsPromises = chosenMatches.map(m => 
                     fetch(`https://v3.football.api-sports.io/predictions?fixture=${m.fixture.id}`, { headers: { "x-apisports-key": API_FOOTBALL_KEY } })
                     .then(res => res.json())
@@ -579,17 +599,16 @@
                 const resultsArray = await Promise.all(predictionsPromises);
                 let apiStats = resultsArray.join('\n');
 
+                // PROMPT BLINDADO PARA GARANTIR MÚLTIPLAS CORRETAS
                 const promptString = `
-Como Tipster Sênior e Quant Trader, audite os jogos: ${matchNames.join(', ')}.
-Contexto: ${context||'Nenhum'}.
-Dados: ${apiStats}
+Como Tipster Sênior, audite os jogos: ${matchNames.join(', ')}. Contexto: ${context||'Nenhum'}. Dados API: ${apiStats}
 
 REGRAS ABSOLUTAS:
-1. ESTIME A ODD (Formato numérico, ex: 1.85). NUNCA use "N/A".
-2. NUNCA deixe o CONTRA_ARGUMENTO vazio. Invente um cenário adverso realista se necessário.
-3. O EV deve ser matemático (ex: +5.2%).
+1. ESTIME A ODD NUMÉRICA (Ex: 1.85). NUNCA use "N/A".
+2. NUNCA DEIXE CONTRA_ARGUMENTO VAZIO. Crie um cenário adverso técnico se não houver óbvio.
+3. Para MÚLTIPLAS, siga a contagem exata exigida.
 
-Sintaxe (separe com '---'):
+Sintaxe exata:
 ---
 [ANALISE_INDIVIDUAL]
 JOGO: [Casa x Fora]
@@ -597,27 +616,31 @@ MERCADO: [Mercado]
 SELECAO: [Seleção]
 ODD: [1.85]
 EV: [+5.2%]
-RACIOCINIO_QUANT: [Texto denso e técnico justificando o EV]
+RACIOCINIO_QUANT: [Texto técnico sobre xG e tática]
 CONTRA_ARGUMENTO: [O que destrói a aposta]
 ---
 
-OBRIGATÓRIO GERAÇÃO DE MULTIPLAS:
+OBRIGATÓRIO GERAÇÃO DE MULTIPLAS. PRESTE ATENÇÃO:
 ---
 [BILHETE_MULTIPLA_VALOR]
 NOME: Múltipla de Valor (Risco Médio)
-ESTRATEGIA: Combinação focada em EV+.
-ODD_TOTAL: [@X.XX (Y.YY * Z.ZZ)] <- MOSTRE O CALCULO
+ESTRATEGIA: Combinação de EV positivo.
+ODD_TOTAL: [@X.XX (Y.YY * Z.ZZ)]
 PROB_MEDIA: [~45%]
 SELECOES:
-[Para CADA jogo selecionado, forneça EXATAMENTE 2 entradas diferentes (ex: Jogo 1: Ambas Marcam + Mais de 3.5 Cartões)]
+Para CADA jogo selecionado acima, crie EXATAMENTE 2 entradas combinadas. Siga este formato:
+- [Jogo 1]: [Entrada A] (@X.XX) e [Entrada B] (@X.XX)
+- [Jogo 2]: [Entrada A] (@X.XX) e [Entrada B] (@X.XX)
 ---
 [BILHETE_MULTIPLA_ELITE]
 NOME: Múltipla Elite (Alta Confiança)
 ESTRATEGIA: Proteção máxima, buscando acerto superior a 80%.
-ODD_TOTAL: [@X.XX (Y.YY * Z.ZZ)] <- MOSTRE O CALCULO
+ODD_TOTAL: [@X.XX (Y.YY * Z.ZZ)]
 PROB_MEDIA: [>80%]
 SELECOES:
-[Para CADA jogo selecionado, forneça EXATAMENTE 1 entrada muito segura (ex: Jogo 1: Dupla Chance Casa)]
+Para CADA jogo selecionado acima, crie EXATAMENTE 1 entrada segura. Siga este formato:
+- [Jogo 1]: [Entrada Segura] (@X.XX)
+- [Jogo 2]: [Entrada Segura] (@X.XX)
 ---`;
 
                 try {
@@ -629,7 +652,7 @@ SELECOES:
                     data.result.split('---').forEach(part => {
                         if(part.includes('[ANALISE_INDIVIDUAL]')) {
                             const rawOdd = extractField(part, 'ODD');
-                            const cleanOdd = parseFloat(rawOdd.replace(/[^0-9.]/g, '')) || 1.80; // Trata possíveis textos grudados na odd
+                            const cleanOdd = parseFloat(rawOdd.replace(/[^0-9.]/g, '')) || 1.80;
                             
                             htmlOutput += `
                             <div class="card-analysis p-6 mb-6">
@@ -656,7 +679,7 @@ SELECOES:
                                     <div class="bg-black border border-white/10 px-5 py-3 rounded-xl shadow-[0_0_20px_rgba(245,158,11,0.1)]"><span class="text-xl font-black text-white">${extractField(part, 'ODD_TOTAL')}</span></div>
                                 </div>
                                 <div class="box-strategy"><strong class="text-[#f59e0b] text-[10px] font-bold uppercase block mb-2">Estratégia do Algoritmo</strong><p class="text-sm text-zinc-300 leading-relaxed">${extractField(part, 'ESTRATEGIA')}</p></div>
-                                <div class="box-selections border-[#f59e0b]/20">${extractField(part, 'SELECOES').replace(/\n/g, '<br><br>')}</div>
+                                <div class="box-selections whitespace-pre-wrap">${extractField(part, 'SELECOES')}</div>
                             </div>`;
                         } else if(part.includes('[BILHETE_MULTIPLA_ELITE]')) {
                             htmlOutput += `
@@ -666,7 +689,7 @@ SELECOES:
                                     <div class="bg-black border border-white/10 px-5 py-3 rounded-xl shadow-[0_0_20px_rgba(99,102,241,0.1)]"><span class="text-xl font-black text-white">${extractField(part, 'ODD_TOTAL')}</span></div>
                                 </div>
                                 <div class="box-strategy"><strong class="text-[#818cf8] text-[10px] font-bold uppercase block mb-2">Estratégia do Algoritmo</strong><p class="text-sm text-zinc-300 leading-relaxed">${extractField(part, 'ESTRATEGIA')}</p></div>
-                                <div class="box-selections border-[#6366f1]/20">${extractField(part, 'SELECOES').replace(/\n/g, '<br><br>')}</div>
+                                <div class="box-selections whitespace-pre-wrap">${extractField(part, 'SELECOES')}</div>
                             </div>`;
                         }
                     });
@@ -678,7 +701,13 @@ SELECOES:
             }
         };
 
-        function extractField(text, fieldName) { const m = text.match(new RegExp(`${fieldName}:\\s*(.*)(?=\\n[A-Z_\\s]+:|$)`, 'i')); return m ? m[1].trim() : ''; }
+        // Função de Regex aprimorada para capturar blocos inteiros com quebra de linha (Resolveu a caixa preta)
+        function extractField(text, fieldName) { 
+            const regex = new RegExp(fieldName + ':\\s*([\\s\\S]*?)(?=\\n[A-Z_]+:|$)', 'i'); 
+            const match = text.match(regex); 
+            return match ? match[1].trim() : ''; 
+        }
+
         document.addEventListener('DOMContentLoaded', () => { auth.init(); });
     </script>
 </body>
