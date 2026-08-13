@@ -38,7 +38,6 @@
         ::-webkit-scrollbar-thumb:hover { background: #52525b; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         
-        /* Glass e Hover Suave */
         .glass-panel { background: rgba(5, 5, 7, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--hb-border); }
         .card-premium { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(255, 255, 255, 0.06); }
         .card-premium:hover { transform: translateY(-3px); border-color: rgba(255, 255, 255, 0.15); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
@@ -59,7 +58,6 @@
         .custom-checkbox:checked { background-color: #00E676; border-color: #00E676; }
         .custom-checkbox:checked::after { content: '\\2714'; font-size: 12px; color: #000; font-weight: bold; }
         
-        /* Borda Gradiente do Destaque */
         .gradient-border { background: linear-gradient(135deg, rgba(236, 72, 153, 0.5), rgba(139, 92, 246, 0.5)); padding: 1px; border-radius: 1rem; }
     </style>
 </head>
@@ -68,7 +66,6 @@
 
     <div id="toast-container"></div>
 
-    <!-- Tela de Autenticação -->
     <div id="auth-screen" class="fixed inset-0 bg-black z-[200] flex items-center justify-center p-4 bg-texture">
         <div class="w-full max-w-md bg-hb-card rounded-2xl p-8 border border-white/5 shadow-2xl relative">
             <div class="flex items-center gap-3 mb-8">
@@ -88,7 +85,6 @@
         </div>
     </div>
 
-    <!-- Sidebar Navegação -->
     <aside class="w-[260px] flex-shrink-0 flex-col border-r border-white/5 bg-hb-panel relative hidden xl:flex z-40">
         <div class="h-24 flex items-center px-6 border-b border-white/5 bg-black">
             <div class="flex items-center gap-3">
@@ -131,7 +127,7 @@
             <!-- DASHBOARD -->
             <section id="view-dashboard" class="spa-view active w-full max-w-4xl mx-auto space-y-6">
                 
-                <!-- DESTAQUE DO PAINEL (NOVA FUNCIONALIDADE) -->
+                <!-- DESTAQUE DO PAINEL -->
                 <div id="destaque-panel" class="hidden">
                     <div class="gradient-border mb-8 shadow-[0_10px_40px_rgba(236,72,153,0.15)]">
                         <div class="bg-[#0f0f12] rounded-[15px] p-6 relative overflow-hidden">
@@ -145,7 +141,7 @@
                                         <p class="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-0.5" id="destaque-league">--</p>
                                     </div>
                                 </div>
-                                <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-[10px] font-mono text-zinc-400"><i class="ph-bold ph-chart-line-up"></i> Screener Estatístico</span>
+                                <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-[10px] font-mono text-zinc-400"><i class="ph-bold ph-chart-line-up"></i> Top Pick IA</span>
                             </div>
 
                             <div class="flex flex-col md:flex-row gap-6">
@@ -157,18 +153,19 @@
                                         <div class="text-right"><h4 class="font-bold text-white text-lg" id="destaque-away">--</h4><p class="text-[10px] text-zinc-500 font-mono" id="destaque-xg-away">xG: --</p></div>
                                     </div>
                                     <p class="text-[10px] uppercase font-mono text-fuchsia-500 font-bold tracking-widest mb-1.5" id="destaque-market">--</p>
-                                    <h3 class="text-3xl font-heading font-black text-white mb-3" id="destaque-selection">--</h3>
-                                    <p class="text-sm text-zinc-400 leading-relaxed" id="destaque-tese">Processando leitura tática do modelo de elite para encontrar o melhor EV+ do dia...</p>
+                                    <h3 class="text-3xl font-heading font-black text-white mb-3" id="destaque-selection">Processando...</h3>
+                                    <p class="text-sm text-zinc-400 leading-relaxed" id="destaque-tese">Extraindo métricas API-Football e processando no Gemini...</p>
                                 </div>
                                 
                                 <!-- Lado Direito -->
                                 <div class="w-full md:w-48 flex flex-col justify-between">
                                     <div class="space-y-4">
                                         <div class="flex justify-between items-center"><span class="text-[10px] uppercase font-mono text-zinc-500 tracking-widest">Risco</span><span class="text-xs font-bold text-hb-green bg-hb-green/10 px-2 py-0.5 rounded border border-hb-green/20" id="destaque-risk">--</span></div>
-                                        <div class="flex justify-between items-center"><span class="text-[10px] uppercase font-mono text-zinc-500 tracking-widest">Prob. Modelo</span><span class="text-sm font-bold text-white font-mono" id="destaque-prob">--</span></div>
-                                        <div class="flex justify-between items-center"><span class="text-[10px] uppercase font-mono text-zinc-500 tracking-widest">Odd Est.</span><span class="text-lg font-black text-fuchsia-400 font-mono" id="destaque-odd">--</span></div>
+                                        <div class="flex justify-between items-center"><span class="text-[10px] uppercase font-mono text-zinc-500 tracking-widest">Confiança</span><span class="text-sm font-bold text-white font-mono" id="destaque-prob">--</span></div>
+                                        <div class="flex justify-between items-center"><span class="text-[10px] uppercase font-mono text-zinc-500 tracking-widest">EV</span><span class="text-sm font-bold text-hb-green font-mono" id="destaque-ev">--</span></div>
+                                        <div class="flex justify-between items-center pt-2 border-t border-white/10"><span class="text-[10px] uppercase font-mono text-zinc-500 tracking-widest">Odd Est.</span><span class="text-lg font-black text-fuchsia-400 font-mono" id="destaque-odd">--</span></div>
                                     </div>
-                                    <button class="w-full mt-4 bg-white hover:bg-zinc-200 text-black font-heading font-black py-3 rounded-xl uppercase tracking-wider transition-colors shadow-glow-white text-xs" onclick="ui.toast('Enviado ao simulador')">
+                                    <button class="w-full mt-4 bg-white hover:bg-zinc-200 text-black font-heading font-black py-3 rounded-xl uppercase tracking-wider transition-colors shadow-glow-white text-xs" onclick="app.addTopPickToSimulator()">
                                         + Simular
                                     </button>
                                 </div>
@@ -211,12 +208,10 @@
                         <label class="block text-[10px] font-mono uppercase text-zinc-500 mb-2 tracking-widest">Contexto (Opcional)</label>
                         <textarea id="tipster-context" rows="2" placeholder="Filtro tático manual ou notícias..." class="w-full bg-black border border-white/10 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-hb-green font-sans"></textarea>
                     </div>
-                    <button onclick="auditorEngine.run()" class="w-full bg-hb-green hover:bg-hb-greenHover text-black font-heading font-extrabold py-4 rounded-xl uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(0,230,118,0.2)] flex items-center justify-center gap-2"><i class="ph-bold ph-cpu text-xl"></i> Executar Auditoria Master</button>
+                    <button onclick="auditorEngine.run()" class="w-full bg-white hover:bg-zinc-200 text-black font-heading font-extrabold py-4 rounded-xl uppercase tracking-widest transition-all shadow-glow-white flex items-center justify-center gap-2"><i class="ph-bold ph-cpu text-xl"></i> Executar Auditoria Master</button>
                 </div>
 
-                <div id="auditor-results-card" class="hidden space-y-6">
-                    <!-- Injetado via JS -->
-                </div>
+                <div id="auditor-results-card" class="hidden space-y-6"></div>
             </section>
 
             <!-- ADMIN -->
@@ -240,7 +235,7 @@
         </div>
     </main>
 
-    <!-- SIMULADOR -->
+    <!-- SIMULADOR LATERAL -->
     <aside class="w-[340px] flex-shrink-0 flex-col border-l border-white/5 bg-hb-panel relative hidden lg:flex z-40 overflow-y-auto no-scrollbar">
         <div class="p-6 border-b border-white/5 bg-hb-panel sticky top-0 z-20">
             <h2 class="font-heading text-sm uppercase tracking-widest font-black text-white flex items-center gap-2"><i class="ph-bold ph-calculator text-zinc-400"></i> Calculadora (EV)</h2>
@@ -248,7 +243,7 @@
         <div class="p-5" id="simulator-container"></div>
     </aside>
 
-    <script type="module">
+    <script>
         const API_FOOTBALL_KEY = "1fc4ead1c40a7b6ac08d5181427890ef";
 
         window.ui = {
@@ -280,17 +275,26 @@
 
         window.auth = {
             init: () => {
+                document.getElementById('splash-screen').classList.remove('hidden');
                 let users = JSON.parse(localStorage.getItem('hb_users'));
                 if(!users) { users = [{ user: 'tzn2510', pass: 'vitor220419', role: 'master' }]; localStorage.setItem('hb_users', JSON.stringify(users)); }
-                const session = JSON.parse(localStorage.getItem('hb_session'));
-                if(session) auth.startSession(session);
+                
+                setTimeout(() => {
+                    document.getElementById('splash-screen').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('splash-screen').classList.add('hidden');
+                        document.getElementById('splash-screen').style.opacity = '1';
+                        const session = JSON.parse(localStorage.getItem('hb_session'));
+                        if(session) auth.startSession(session);
+                    }, 500);
+                }, 1000);
             },
             login: () => {
                 const u = document.getElementById('login-user').value.trim(); const p = document.getElementById('login-pass').value.trim();
                 const users = JSON.parse(localStorage.getItem('hb_users')) || []; const found = users.find(x => x.user === u && x.pass === p);
                 if(found) {
                     localStorage.setItem('hb_session', JSON.stringify(found)); document.getElementById('auth-screen').remove(); document.getElementById('splash-screen').classList.remove('hidden');
-                    setTimeout(() => { document.getElementById('splash-screen').style.opacity = '0'; setTimeout(() => { document.getElementById('splash-screen').remove(); auth.startSession(found); }, 500); }, 1000);
+                    setTimeout(() => { document.getElementById('splash-screen').style.opacity = '0'; setTimeout(() => { document.getElementById('splash-screen').classList.add('hidden'); auth.startSession(found); }, 500); }, 1000);
                 } else ui.toast("Senha incorreta.", "error");
             },
             startSession: (user) => {
@@ -302,7 +306,7 @@
         };
 
         window.app = {
-            matches: [], selectedMatches: new Set(), simulatorPicks: [], stake: 100.00,
+            matches: [], selectedMatches: new Set(), simulatorPicks: [], stake: 100.00, currentTopPick: null,
             navigate: (viewId) => {
                 document.querySelectorAll('.spa-view').forEach(v => v.classList.remove('active')); document.getElementById(`view-${viewId}`)?.classList.add('active');
                 document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); document.querySelector(`.nav-link[data-path="${viewId}"]`)?.classList.add('active');
@@ -310,7 +314,7 @@
                 if(viewId === 'auditor') ui.setHeaderTitle("Motor de Auditoria", "cpu");
             },
             loadFixtures: async () => {
-                ui.setLoader(true, "API-Football...");
+                ui.setLoader(true, "Conectando API-Football...");
                 try {
                     const res = await fetch(`https://v3.football.api-sports.io/fixtures?date=${new Date().toLocaleDateString('sv-SE')}&timezone=America/Sao_Paulo`, { headers: { "x-apisports-key": API_FOOTBALL_KEY } });
                     const data = await res.json();
@@ -323,7 +327,7 @@
                         { fixture: { id: 1 }, teams: { home: { name: "Flamengo" }, away: { name: "Cruzeiro" } }, league: { name: "Brasileirão Série A" } },
                         { fixture: { id: 2 }, teams: { home: { name: "Boca Juniors" }, away: { name: "River Plate" } }, league: { name: "Copa Libertadores" } }
                     ];
-                    app.populateLeagues(); app.renderMatchesList(); app.generateTopPick(); ui.toast("Fallback Local Ativo.");
+                    app.populateLeagues(); app.renderMatchesList(); app.generateTopPick(); ui.toast("Fallback Local Ativo.", "info");
                 } finally { ui.setLoader(false); }
             },
             populateLeagues: () => {
@@ -348,7 +352,7 @@
                 box.innerHTML = indices.map(i => `<div class="p-3 bg-black border border-white/10 rounded-lg flex justify-between items-center mb-2"><span class="text-xs font-bold text-white">${app.matches[i].teams.home.name} x ${app.matches[i].teams.away.name}</span><button onclick="app.toggleMatch(${i})" class="text-zinc-500 hover:text-red-400"><i class="ph-bold ph-trash"></i></button></div>`).join('');
             },
 
-            // LÓGICA DO DESTAQUE DO PAINEL
+            // LOGICA DO DESTAQUE 
             generateTopPick: async () => {
                 const targetLeagues = /libertadores|sul-americana|copa do brasil|brasileir/i;
                 const topMatch = app.matches.find(m => targetLeagues.test(m.league.name)) || app.matches[0];
@@ -360,7 +364,6 @@
                 document.getElementById('destaque-away').innerText = topMatch.teams.away.name;
 
                 try {
-                    // API-Football Prediction simples
                     const predRes = await fetch(`https://v3.football.api-sports.io/predictions?fixture=${topMatch.fixture.id}`, { headers: { "x-apisports-key": API_FOOTBALL_KEY } });
                     const predData = await predRes.json();
                     let stats = "";
@@ -368,23 +371,56 @@
                         const p = predData.response[0];
                         document.getElementById('destaque-xg-home').innerText = `xG: ${p.predictions.goals.home}`;
                         document.getElementById('destaque-xg-away').innerText = `xG: ${p.predictions.goals.away}`;
-                        stats = `Prob(Casa): ${p.predictions.percent.home}, Prob(Fora): ${p.predictions.percent.away}`;
+                        stats = `P(Casa): ${p.predictions.percent.home}, P(Fora): ${p.predictions.percent.away}`;
                     }
 
-                    // Pede pra IA gerar o destaque em JSON rápido
-                    const prompt = `Analise o jogo ${topMatch.teams.home.name} x ${topMatch.teams.away.name} (${stats}). Ache a aposta mais segura (EV+). Como Oddsmaker, estime a odd padrão Betano (não use N/A). Retorne APENAS um JSON válido: {"mercado":"Total de Gols", "selecao":"Abaixo de 2.5", "odd":"1.50", "prob":"70%", "risco":"Baixo", "tese":"Sua tese curta"}`;
+                    const prompt = `Analise o jogo ${topMatch.teams.home.name} x ${topMatch.teams.away.name} (${stats}). Retorne APENAS um objeto JSON válido (sem crases de markdown) com as chaves exatas: "mercado", "selecao", "odd" (apenas numero decimal, estipule valor justo), "prob" (ex: 80%), "risco" (Baixo/Médio), "ev" (ex: +5%), "tese" (texto curto).`;
                     const aiRes = await fetch('/api/gemini', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt: prompt }) });
                     const aiData = await aiRes.json();
                     
-                    const parsed = JSON.parse(aiData.result.replace(/```json|```/g, ''));
+                    if(aiData.error) throw new Error(aiData.error);
+                    
+                    const jsonStr = aiData.result.replace(/```json|```/g, '').trim();
+                    const parsed = JSON.parse(jsonStr);
+
+                    // SALVA PARA O BOTAO "SIMULAR" PEGAR
+                    app.currentTopPick = {
+                        id: 'top-' + Math.random(),
+                        match: `${topMatch.teams.home.name} x ${topMatch.teams.away.name}`,
+                        market: parsed.mercado,
+                        selection: parsed.selecao,
+                        odd: parseFloat(parsed.odd) || 1.80,
+                        ev: parsed.ev || '+5%',
+                        confidence: parsed.prob
+                    };
+
                     document.getElementById('destaque-market').innerText = parsed.mercado;
                     document.getElementById('destaque-selection').innerText = parsed.selecao;
-                    document.getElementById('destaque-odd').innerText = parsed.odd;
+                    document.getElementById('destaque-odd').innerText = '@' + parsed.odd;
                     document.getElementById('destaque-prob').innerText = parsed.prob;
+                    document.getElementById('destaque-ev').innerText = parsed.ev || '--';
                     document.getElementById('destaque-risk').innerText = parsed.risco;
                     document.getElementById('destaque-tese').innerText = parsed.tese;
 
-                } catch(e) { console.log("Erro Top Pick", e); }
+                } catch(e) { 
+                    console.log("Erro Top Pick", e); 
+                    document.getElementById('destaque-tese').innerText = "Motor IA encontrou instabilidade na extração deste jogo.";
+                }
+            },
+            addTopPickToSimulator: () => {
+                if(app.currentTopPick) { app.addToSimulator(app.currentTopPick); } else { ui.toast("Aguarde a IA finalizar a análise.", "error"); }
+            },
+
+            addToSimulator: (pick) => { app.simulatorPicks.push(pick); app.renderSimulator(); ui.toast("Adicionado à Gestão de Stake."); },
+            removeFromSimulator: (id) => { app.simulatorPicks = app.simulatorPicks.filter(p => p.id !== id); app.renderSimulator(); },
+            renderSimulator: () => {
+                const container = document.getElementById('simulator-container');
+                if(!app.simulatorPicks.length) { container.innerHTML = `<div class="py-12 text-center opacity-50"><i class="ph-thin ph-calculator text-5xl mb-4 text-zinc-600"></i><p class="text-xs text-zinc-500">Adicione teses para simular.</p></div>`; return; }
+                let totalOdd = 1; app.simulatorPicks.forEach(p => totalOdd *= p.odd); const lucro = (app.stake * totalOdd) - app.stake;
+                let html = '<div class="space-y-3 mb-6">';
+                app.simulatorPicks.forEach(p => { html += `<div class="bg-black border border-white/5 hover:border-hb-green/30 rounded-xl p-4 relative group"><button onclick="app.removeFromSimulator('${p.id}')" class="absolute top-3 right-3 text-zinc-600 opacity-0 group-hover:opacity-100 hover:text-red-400 transition-all"><i class="ph-bold ph-x"></i></button><p class="text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-1.5 truncate pr-6">${p.match}</p><p class="text-sm font-bold text-white mb-3">${p.market} - ${p.selection || ''}</p><div class="flex justify-between border-t border-white/5 pt-2"><span class="text-[10px] bg-hb-green/10 text-hb-green px-2 py-0.5 rounded font-mono font-bold">EV ${p.ev}</span><span class="text-sm font-mono text-white font-black bg-zinc-900 px-2 py-0.5 rounded">@${p.odd.toFixed(2)}</span></div></div>`; });
+                html += `</div><div class="space-y-4 bg-black border border-white/10 p-5 rounded-2xl shadow-xl"><label class="block text-[10px] uppercase font-mono text-zinc-500 tracking-widest">Sua Stake (R$)</label><input type="number" value="${app.stake}" oninput="app.stake=parseFloat(this.value)||0; app.renderSimulator();" class="w-full bg-zinc-900 border border-white/10 rounded-lg p-3 text-white font-mono focus:border-hb-green outline-none"><div class="flex justify-between text-xs font-mono pt-2"><span class="text-zinc-500">Odd Combinada:</span><span class="text-white font-bold">@${totalOdd.toFixed(2)}</span></div><div class="flex justify-between items-end border-t border-white/10 pt-4"><span class="text-zinc-500 uppercase font-bold text-[10px] tracking-widest">Lucro Líquido:</span><span class="text-hb-green font-black text-xl">R$ ${lucro.toFixed(2)}</span></div></div>`;
+                container.innerHTML = html;
             }
         };
 
@@ -412,18 +448,17 @@
                 }
 
                 const promptString = `
-[HUNTERBET — MOTOR DE AUDITORIA DE VALOR (C/ BILHETES PRONTOS)]
+[HUNTERBET — MOTOR DE AUDITORIA DE VALOR]
 Você é o HunterBet Elite Analyst.
 
 JOGOS: ${matchNames.join(', ')}
 DADOS BASE DA API: ${apiFootballStats}
 
 [REGRA DE ODDS (OBRIGATÓRIO)]
-COMO ODDSMAKER DE ELITE, ESTIME A ODD PADRÃO BETANO BASEADA NA PROBABILIDADE (Odd = 1 / (Prob/100) + margem). NUNCA DEVOLVA "N/A" PARA ODD OU EV.
+COMO ODDSMAKER DE ELITE, ESTIME A ODD PADRÃO BETANO BASEADA NA PROBABILIDADE. NUNCA DEVOLVA "N/A" PARA ODD OU EV.
 
 [SINTAXE OBRIGATÓRIA - USE EXATAMENTE '---' PARA SEPARAR OS BLOCOS]:
-
-Para CADA JOGO, gere o bloco (Layout Fiel à Imagem 1):
+Para CADA JOGO, gere o bloco:
 ---
 [ANALISE_INDIVIDUAL]
 JOGO: [Casa x Fora]
@@ -436,18 +471,18 @@ TESE_DE_VALOR: [Análise em 2 linhas]
 CONTRA_ARGUMENTO: [O que faria perder?]
 ---
 
-OBRIGATÓRIO: APÓS AS ANÁLISES INDIVIDUAIS, GERE ESTES DOIS BILHETES (Layout Fiel à Imagem 2):
+OBRIGATÓRIO: APÓS AS ANÁLISES INDIVIDUAIS, GERE ESTES DOIS BILHETES:
 ---
 [BILHETE_MULTIPLA_VALOR]
 NOME: Múltipla de Valor (Risco Médio)
-ESTRATEGIA: Esta múltipla combina seleções com EV positivo e probabilidades na faixa de 70-80%. Selecionamos 1 a 2 entradas por jogo para balancear o risco.
+ESTRATEGIA: Combina seleções com EV positivo e probabilidades de 70-80%.
 ODD_TOTAL: [X.XX - Calcule]
 PROB_MEDIA: [~75%]
 SELECOES: [Liste como: "Jogo 1: Entrada A + Entrada B", etc]
 ---
 [BILHETE_MULTIPLA_ELITE]
 NOME: Múltipla Elite (Alta Confiança)
-ESTRATEGIA: Foca em seleções com as maiores probabilidades (>80%) e EV positivo, priorizando segurança. 1 entrada por jogo.
+ESTRATEGIA: Foca nas maiores probabilidades (>80%) e segurança.
 ODD_TOTAL: [X.XX - Calcule]
 PROB_MEDIA: [>80%]
 SELECOES: [Liste como: "Jogo 1: Entrada Forte", etc]
@@ -466,9 +501,9 @@ SELECOES: [Liste como: "Jogo 1: Entrada Forte", etc]
                         if(part.includes('[ANALISE_INDIVIDUAL]')) {
                             htmlOutput += `
                             <div class="bg-black border border-white/5 rounded-[12px] p-6 mb-6 card-premium">
-                                <div class="flex justify-between items-center mb-6">
+                                <div class="flex justify-between items-center mb-6 border-b border-white/5 pb-4">
                                     <h4 class="font-heading font-black text-white text-xl">${extractField(part, 'JOGO')}</h4>
-                                    <span class="w-10 h-6 rounded-full border border-hb-green/50 flex items-center justify-center"></span>
+                                    <span class="w-10 h-6 rounded-full border border-hb-green/50 flex items-center justify-center bg-hb-green/10"></span>
                                 </div>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                                     <div class="bg-[#121214] p-4 rounded-xl border border-white/5"><span class="text-zinc-500 block uppercase mb-1.5 text-[9px] tracking-widest font-mono">Mercado</span><span class="text-white font-bold text-sm">${extractField(part, 'MERCADO')}</span></div>
@@ -480,6 +515,11 @@ SELECOES: [Liste como: "Jogo 1: Entrada Forte", etc]
                                     <p><strong class="text-zinc-500 font-mono text-[10px] uppercase block mb-2 flex items-center gap-2"><i class="ph-bold ph-target text-zinc-400"></i> Bottleneck Tático</strong><span class="text-zinc-300 leading-relaxed block">${extractField(part, 'BOTTLENECK_TATICO')}</span></p>
                                     <p><strong class="text-hb-green font-mono text-[10px] uppercase block mb-2 flex items-center gap-2"><i class="ph-bold ph-trend-up text-hb-green"></i> Tese de Valor (Quantitativa)</strong><span class="text-zinc-300 leading-relaxed block">${extractField(part, 'TESE_DE_VALOR')}</span></p>
                                     <p><strong class="text-red-400 font-mono text-[10px] uppercase block mb-2 flex items-center gap-2"><i class="ph-bold ph-shield-warning text-red-400"></i> Contra-Argumento Cético</strong><span class="text-zinc-500 italic leading-relaxed block">"${extractField(part, 'CONTRA_ARGUMENTO')}"</span></p>
+                                </div>
+                                <div class="mt-4 flex justify-end">
+                                    <button onclick="app.addToSimulator({id: '${Math.random()}', match: '${extractField(part, 'JOGO')}', market: '${extractField(part, 'MERCADO')}', selection: '${extractField(part, 'SELECAO')}', odd: ${parseFloat(extractField(part, 'ODD')) || 1.80}, ev: '${extractField(part, 'EV')}', confidence: 'N/A'})" class="bg-white hover:bg-zinc-200 text-black text-xs font-heading font-black px-6 py-3 rounded-xl uppercase tracking-wider transition-colors shadow-glow-white">
+                                        + Enviar p/ Simulador
+                                    </button>
                                 </div>
                             </div>`;
                         } else if(part.includes('[BILHETE_MULTIPLA_VALOR]')) {
@@ -505,9 +545,9 @@ SELECOES: [Liste como: "Jogo 1: Entrada Forte", etc]
                         }
                     });
                     document.getElementById('auditor-results-card').innerHTML = htmlOutput;
-                    ui.toast("Auditoria concluída.");
+                    ui.toast("Auditoria concluída com Bilhetes de Valor.");
                 } catch (err) {
-                    document.getElementById('auditor-results-card').innerHTML = `<div class="p-6 text-red-400 font-mono">Erro IA: ${err.message}</div>`;
+                    document.getElementById('auditor-results-card').innerHTML = `<div class="p-6 text-red-400 font-mono text-center border border-red-500/30 rounded-xl bg-red-950/20">Erro IA: ${err.message}</div>`;
                 }
             }
         };
