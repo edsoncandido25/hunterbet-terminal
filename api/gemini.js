@@ -1,8 +1,6 @@
-// PROTEÇÃO VERCEL: Permite que a IA pense por até 60 segundos sem a Vercel derrubar a conexão (Erro 504)
 export const maxDuration = 60; 
 
 export default async function handler(req, res) {
-  // Configuração rigorosa de CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -17,8 +15,8 @@ export default async function handler(req, res) {
 
     if (!apiKey) return res.status(500).json({ error: "Chave GEMINI_API_KEY ausente na Vercel." });
 
-    // Motor 1.5-Pro: Máximo raciocínio lógico sem o erro de indisponibilidade
-    const apiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`, {
+    // Mudança para o motor 2.5-flash universal, que nunca dá erro de "model not found" na API do Google
+    const apiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
